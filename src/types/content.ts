@@ -172,7 +172,31 @@ export type LessonUnit = {
     title: string;
     description: string;
     order: number;
+    reading?: LessonReading;
     activities: Activity[];
+};
+
+export type LessonReading = {
+    id: string;
+    title: string;
+    text: {
+        description?: string;
+        content_data: LessonReadingTextBlock[];
+    };
+    audioUrl?: string;
+    glossary?: GlossaryEntry[];
+};
+
+export type LessonReadingTextBlock = {
+    order_id: number;
+    profession?: string;
+    content_text: string;
+    is_tts?: boolean;
+};
+
+export type GlossaryEntry = {
+    word: string;
+    definition: string;
 };
 
 export type Lesson = {

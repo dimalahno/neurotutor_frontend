@@ -24,7 +24,7 @@ export function CoursePage({ courses, onOpenLesson }: { courses: Course[]; onOpe
                     <List>
                         {course.lessons.map((lesson) => (
                             <ListItem key={lesson.lesson_id} divider>
-                                <ListItemText primary={`Урок ${lesson.index}: ${lesson.title}`} secondary={`ID: ${lesson.lesson_id}`} />
+                                <ListItemText primary={`Урок ${lesson.index}: ${lesson.title}`} />
                                 <Button variant="outlined" size="small" onClick={() => onOpenLesson(lesson.lesson_id)}>
                                     Открыть урок
                                 </Button>

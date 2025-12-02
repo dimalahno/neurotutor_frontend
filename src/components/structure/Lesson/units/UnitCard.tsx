@@ -11,13 +11,7 @@ export function UnitCard({ unit }: { unit: LessonUnit }) {
         <Accordion disableGutters variant="outlined" slotProps={{ transition: { unmountOnExit: true } }}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}> 
                 <Stack spacing={0.5} width="100%">
-                    <Typography variant="subtitle2" color="text.secondary">
-                        {unit.order}. {unit.type}
-                    </Typography>
-                    <Typography variant="subtitle1">{unit.title}</Typography>
-                    <Typography variant="caption" color="text.secondary">
-                        {activitiesCount} активностей · {hasLLMTasks ? "Есть задания с LLM" : "Проверка правилами"}
-                    </Typography>
+                    <Typography variant="subtitle1">{unit.order}. {unit.title}</Typography>
                 </Stack>
             </AccordionSummary>
 

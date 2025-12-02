@@ -59,10 +59,6 @@ function formatActivityTitle(activity: Activity, index: number) {
 function ActivityMeta({ activity }: { activity: Activity }) {
     const chips: string[] = [];
 
-    if (activity.autoCheck?.type) {
-        chips.push(`Автопроверка: ${activity.autoCheck.type}`);
-    }
-
     return (
         <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
             {chips.map((label) => (
@@ -81,9 +77,6 @@ function SpeakingPromptDetails({ activity }: { activity: SpeakingPromptActivity 
                 {inputTypes.map((type) => (
                     <Chip key={type} label={`Формат ответа: ${type}`} size="small" />
                 ))}
-                {activity.show_question_mode ? (
-                    <Chip label={`Показ вопросов: ${activity.show_question_mode}`} size="small" color="secondary" />
-                ) : null}
             </Stack>
             {activity.questions?.length > 0 && (
                 <List dense>

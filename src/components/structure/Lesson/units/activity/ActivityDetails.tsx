@@ -1,4 +1,7 @@
 import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
     Alert,
     Box,
     Chip,
@@ -14,6 +17,7 @@ import {
     TableRow,
     Typography,
 } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import type {
     Activity,
     ErrorCorrectionActivity,
@@ -411,18 +415,29 @@ function renderActivityContent(activity: Activity) {
 
 export function ActivityCard({ activity, index }: { activity: Activity; index: number }) {
     return (
-        <Box sx={{ border: "1px solid", borderColor: "divider", borderRadius: 1, p: 2 }}>
-            <Stack spacing={1.5}>
-                <Stack spacing={0.5}>
+        <Accordion
+            disableGutters
+            defaultExpanded={index === 1}
+            sx={{
+                border: "1px solid",
+                borderColor: "divider",
+                borderRadius: 1,
+                "&:before": { display: "none" },
+                overflow: "hidden",
+            }}
+        >
+            <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ px: 2 }}>
+                <Stack spacing={0.5} sx={{ width: "100%" }}>
                     <Typography variant="subtitle2" color="text.secondary">
                         {formatActivityTitle(activity, index)}
                     </Typography>
                     <Typography variant="h6">{activity.prompt || "Активность"}</Typography>
                     <ActivityMeta activity={activity} />
                 </Stack>
-                <Divider />
+            </AccordionSummary>
+            <AccordionDetails sx={{ borderTop: "1px solid", borderColor: "divider" }}>
                 {renderActivityContent(activity)}
-            </Stack>
-        </Box>
+            </AccordionDetails>
+        </Accordion>
     );
 }

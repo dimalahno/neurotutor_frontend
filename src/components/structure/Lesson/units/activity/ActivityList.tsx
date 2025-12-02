@@ -1,11 +1,12 @@
-import { Chip, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import type { Activity } from "../../../../../types/content";
+import { ActivityCard } from "./ActivityDetails";
 
 export function ActivityList({ activities }: { activities: Activity[] }) {
     return (
-        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-            {activities.map((activity) => (
-                <Chip key={activity.id} label={activity.type} variant="outlined" sx={{ mb: 1 }} />
+        <Stack spacing={2} sx={{ mt: 1 }}>
+            {activities.map((activity, index) => (
+                <ActivityCard key={activity.id} activity={activity} index={index + 1} />
             ))}
         </Stack>
     );

@@ -20,17 +20,151 @@ export type AgendaEntry = {
 
 export type Agenda = Record<string, AgendaEntry>;
 
-export type Activity = {
-    id: string;
+export type AutoCheck = {
     type: string;
+};
+
+export type LlmCheck = {
+    enabled: boolean;
+    mode?: string;
+    provider?: string;
+    systemPrompt?: string;
+    scoringDimensions?: string[];
+    maxScore?: number;
+};
+
+type ActivityBase<TType extends string> = {
+    id: string;
+    type: TType;
     prompt?: string;
-    autoCheck?: {
-        type: string;
-    };
-    llmCheck?: {
-        enabled: boolean;
+    autoCheck?: AutoCheck;
+    llmCheck?: LlmCheck;
+};
+
+export type SpeakingPromptQuestion = {
+    id: string;
+    prompt: string;
+    expectedAnswerType?: string;
+    modelAnswer?: string;
+    targetPatterns?: string[];
+    keywords?: string[];
+};
+
+export type SpeakingPromptActivity = ActivityBase<"speaking_prompt"> & {
+    inputType: string | string[];
+    show_question_mode?: string;
+    questions: SpeakingPromptQuestion[];
+};
+
+export type VocabListActivity = ActivityBase<"vocab_list"> & {
+    words: {
+        term: string;
+        definition: string;
+        example?: string;
+    }[];
+};
+
+export type MatchingActivity = ActivityBase<"matching"> & {
+    items: {
+        left: string;
+        rightOptions: string[];
+        correctIndex: number;
+    }[];
+};
+
+export type GapFillActivity = ActivityBase<"gap_fill"> & {
+    items: {
+        sentence: string;
+        correct: string;
+    }[];
+};
+
+export type MultipleChoiceActivity = ActivityBase<"multiple_choice"> & {
+    items: {
+        question: string;
+        options: string[];
+        correctIndex: number;
+    }[];
+};
+
+export type OpenAnswerActivity = ActivityBase<"open_answer"> & {
+    inputType: string | string[];
+    guidelines?: string[];
+};
+
+export type TableCompletionActivity = ActivityBase<"table_completion"> & {
+    instruction?: string;
+    table: {
+        rows: Record<string, string>[];
     };
 };
+
+export type WordOrderActivity = ActivityBase<"word_order"> & {
+    items: {
+        words: string[];
+        solution: string;
+    }[];
+};
+
+export type ErrorCorrectionActivity = ActivityBase<"error_correction"> & {
+    items: {
+        incorrect: string;
+        correct: string;
+    }[];
+};
+
+export type LlmAdaptiveActivity = ActivityBase<"llm_adaptive">;
+
+export type ListenAndRepeatActivity = ActivityBase<"listen_and_repeat"> & {
+    audioUrl: string;
+    wordList: string[];
+};
+
+export type ListeningMultipleChoiceActivity = ActivityBase<"listening_multiple_choice"> & {
+    tracks: {
+        title: string;
+        trackId: string;
+    }[];
+    items: {
+        question: string;
+        options: string[];
+        correctIndex: number;
+    }[];
+};
+
+export type RoleplayActivity = ActivityBase<"roleplay"> & {
+    scenario?: string;
+    inputType: string | string[];
+    turns: {
+        id: string;
+        role: string;
+        type: string;
+        text?: string;
+        targetPatterns?: string[];
+        keywords?: string[];
+        modelAnswer?: string;
+        expectedAnswerType?: string;
+    }[];
+};
+
+export type LlmSummaryFeedbackActivity = ActivityBase<"llm_summary_feedback">;
+
+export type Activity =
+    | SpeakingPromptActivity
+    | VocabListActivity
+    | MatchingActivity
+    | GapFillActivity
+    | MultipleChoiceActivity
+    | OpenAnswerActivity
+    | TableCompletionActivity
+    | WordOrderActivity
+    | ErrorCorrectionActivity
+    | LlmAdaptiveActivity
+    | ListenAndRepeatActivity
+    | ListeningMultipleChoiceActivity
+    | RoleplayActivity
+    | LlmSummaryFeedbackActivity
+    | ActivityBase<string>;
 
 export type LessonUnit = {
     id: string;

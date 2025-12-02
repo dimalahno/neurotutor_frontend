@@ -1,4 +1,5 @@
-import { Divider, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Accordion, AccordionDetails, AccordionSummary, Divider, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
 import type { GlossaryEntry, LessonReading, LessonReadingTextBlock } from "../../../../../types/content";
 
 function ReadingTextSection({ text }: { text: LessonReading["text"] }) {
@@ -68,27 +69,42 @@ export function UnitReadingContent({ reading }: { reading: LessonReading }) {
     const hasGlossary = (reading.glossary?.length ?? 0) > 0;
 
     return (
-        <Stack spacing={2} sx={{ p: 2, borderRadius: 2, border: 1, borderColor: "divider", backgroundColor: "grey.50" }}>
-            <Stack spacing={0.5}>
-                <Typography variant="subtitle2" color="text.secondary">
-                    Чтение
-                </Typography>
-                <Typography variant="h6">{reading.title}</Typography>
-                {reading.audioUrl ? (
-                    <Typography variant="body2" color="text.secondary">
-                        Аудио: {reading.audioUrl}
+        <Accordion
+            disableGutters
+            variant="outlined"
+            slotProps={{ transition: { unmountOnExit: true } }}
+            sx={{
+                borderRadius: 2,
+                "&:before": { display: "none" },
+                overflow: "hidden",
+            }}
+        >
+            <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ px: 2 }}>
+                <Stack spacing={0.5} sx={{ width: "100%" }}>
+                    <Typography variant="subtitle2" color="text.secondary">
+                        Чтение
                     </Typography>
-                ) : null}
-            </Stack>
+                    <Typography variant="h6">{reading.title}</Typography>
+                    {reading.audioUrl ? (
+                        <Typography variant="body2" color="text.secondary">
+                            Аудио: {reading.audioUrl}
+                        </Typography>
+                    ) : null}
+                </Stack>
+            </AccordionSummary>
 
-            <ReadingTextSection text={reading.text} />
+            <AccordionDetails sx={{ borderTop: "1px solid", borderColor: "divider", backgroundColor: "grey.50" }}>
+                <Stack spacing={2}>
+                    <ReadingTextSection text={reading.text} />
 
-            {hasGlossary ? (
-                <>
-                    <Divider />
-                    <GlossaryList glossary={reading.glossary ?? []} />
-                </>
-            ) : null}
-        </Stack>
+                    {hasGlossary ? (
+                        <>
+                            <Divider />
+                            <GlossaryList glossary={reading.glossary ?? []} />
+                        </>
+                    ) : null}
+                </Stack>
+            </AccordionDetails>
+        </Accordion>
     );
 }

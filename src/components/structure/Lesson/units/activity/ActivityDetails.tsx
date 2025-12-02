@@ -408,7 +408,6 @@ export function ActivityCard({ activity, index }: { activity: Activity; index: n
     return (
         <Accordion
             disableGutters
-            defaultExpanded={index === 1}
             sx={{
                 border: "1px solid",
                 borderColor: "divider",

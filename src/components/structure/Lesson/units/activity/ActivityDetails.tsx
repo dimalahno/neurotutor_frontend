@@ -72,7 +72,6 @@ function ActivityMeta({ activity }: { activity: Activity }) {
 
 function SpeakingPromptDetails({ activity }: { activity: SpeakingPromptActivity }) {
     const inputTypes = Array.isArray(activity.inputType) ? activity.inputType : [activity.inputType];
-
     return (
         <Stack spacing={2}>
             {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
@@ -84,33 +83,35 @@ function SpeakingPromptDetails({ activity }: { activity: SpeakingPromptActivity 
                     <Chip label={`Показ вопросов: ${activity.show_question_mode}`} size="small" color="secondary" />
                 ) : null}
             </Stack>
-            <List dense>
-                {activity.questions.map((question) => (
-                    <ListItem key={question.id} alignItems="flex-start" sx={{ flexDirection: "column", alignItems: "flex-start" }}>
-                        <Typography variant="subtitle2">{question.prompt}</Typography>
-                        {question.expectedAnswerType ? (
-                            <Typography variant="caption" color="text.secondary">
-                                Тип ответа: {question.expectedAnswerType}
-                            </Typography>
-                        ) : null}
-                        {question.modelAnswer ? (
-                            <Typography variant="body2" color="text.secondary">
-                                Пример ответа: {question.modelAnswer}
-                            </Typography>
-                        ) : null}
-                        {question.targetPatterns ? (
-                            <Typography variant="body2" color="text.secondary">
-                                Шаблоны: {question.targetPatterns.join("; ")}
-                            </Typography>
-                        ) : null}
-                        {question.keywords ? (
-                            <Typography variant="body2" color="text.secondary">
-                                Ключевые слова: {question.keywords.join(", ")}
-                            </Typography>
-                        ) : null}
-                    </ListItem>
-                ))}
-            </List>
+            {activity.questions?.length > 0 && (
+                <List dense>
+                    {activity.questions.map((question) => (
+                        <ListItem key={question.id} alignItems="flex-start" sx={{ flexDirection: "column", alignItems: "flex-start" }}>
+                            <Typography variant="subtitle2">{question.prompt}</Typography>
+                            {question.expectedAnswerType ? (
+                                <Typography variant="caption" color="text.secondary">
+                                    Тип ответа: {question.expectedAnswerType}
+                                </Typography>
+                            ) : null}
+                            {question.modelAnswer ? (
+                                <Typography variant="body2" color="text.secondary">
+                                    Пример ответа: {question.modelAnswer}
+                                </Typography>
+                            ) : null}
+                            {question.targetPatterns ? (
+                                <Typography variant="body2" color="text.secondary">
+                                    Шаблоны: {question.targetPatterns.join("; ")}
+                                </Typography>
+                            ) : null}
+                            {question.keywords ? (
+                                <Typography variant="body2" color="text.secondary">
+                                    Ключевые слова: {question.keywords.join(", ")}
+                                </Typography>
+                            ) : null}
+                        </ListItem>
+                    ))}
+                </List>
+            )}
         </Stack>
     );
 }

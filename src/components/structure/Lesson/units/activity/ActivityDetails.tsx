@@ -63,8 +63,6 @@ function ActivityMeta({ activity }: { activity: Activity }) {
         chips.push(`Автопроверка: ${activity.autoCheck.type}`);
     }
 
-    chips.push(activity.llmCheck?.enabled ? `LLM: ${activity.llmCheck.mode ?? "включено"}` : "LLM: выключено");
-
     return (
         <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
             {chips.map((label) => (

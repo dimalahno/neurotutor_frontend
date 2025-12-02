@@ -173,7 +173,13 @@ export type LessonUnit = {
     description: string;
     order: number;
     reading?: LessonReading;
+    explanation?: LessonUnitExplanation;
     activities: Activity[];
+};
+
+export type LessonUnitExplanation = {
+    text: string;
+    examples?: string[];
 };
 
 export type LessonReading = {

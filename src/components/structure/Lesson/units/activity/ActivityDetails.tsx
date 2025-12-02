@@ -56,7 +56,7 @@ function formatActivityTitle(activity: Activity, index: number) {
     return `${index}. ${label}`;
 }
 
-function ActivityMeta({ activity }: { activity: Activity }) {
+function ActivityMeta() {
     const chips: string[] = [];
 
     return (
@@ -422,7 +422,7 @@ export function ActivityCard({ activity, index }: { activity: Activity; index: n
                         {formatActivityTitle(activity, index)}
                     </Typography>
                     <Typography variant="h6">{activity.prompt || "Активность"}</Typography>
-                    <ActivityMeta activity={activity} />
+                    <ActivityMeta />
                 </Stack>
             </AccordionSummary>
             <AccordionDetails sx={{ borderTop: "1px solid", borderColor: "divider" }}>

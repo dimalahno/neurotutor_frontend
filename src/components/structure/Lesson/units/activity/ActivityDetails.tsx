@@ -33,6 +33,7 @@ import type {
     VocabListActivity,
     WordOrderActivity,
 } from "../../../../../types/content";
+import { ChoiceQuestion } from "./ChoiceQuestion";
 
 const activityLabels: Record<string, string> = {
     speaking_prompt: "Говорение",
@@ -170,19 +171,18 @@ function GapFillDetails({ activity }: { activity: GapFillActivity }) {
 
 function MultipleChoiceDetails({ activity }: { activity: MultipleChoiceActivity }) {
     return (
-        <Stack spacing={1}>
+        <Stack spacing={2}>
             {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
-            <List dense>
+            <Stack spacing={1.5}>
                 {activity.items.map((item, index) => (
-                    <ListItem key={`${item.question}-${index}`} alignItems="flex-start" sx={{ flexDirection: "column", alignItems: "flex-start" }}>
-                        <Typography variant="subtitle1">{item.question}</Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            Варианты: {item.options.join(" · ")}
-                        </Typography>
-                        <Typography variant="body2">Правильный ответ: {item.options[item.correctIndex]}</Typography>
-                    </ListItem>
+                    <ChoiceQuestion
+                        key={`${item.question}-${index}`}
+                        question={`${index + 1}. ${item.question}`}
+                        options={item.options}
+                        correctIndex={item.correctIndex}
+                    />
                 ))}
-            </List>
+            </Stack>
         </Stack>
     );
 }
@@ -313,20 +313,17 @@ function ListeningMultipleChoiceDetails({ activity }: { activity: ListeningMulti
                 </List>
             </Box>
             <Divider />
-            <Box>
+            <Stack spacing={1.5}>
                 <Typography variant="subtitle2">Вопросы:</Typography>
-                <List dense>
-                    {activity.items.map((item, index) => (
-                        <ListItem key={index} sx={{ flexDirection: "column", alignItems: "flex-start" }}>
-                            <Typography variant="subtitle1">{item.question}</Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                Варианты: {item.options.join(" · ")}
-                            </Typography>
-                            <Typography variant="body2">Правильный ответ: {item.options[item.correctIndex]}</Typography>
-                        </ListItem>
-                    ))}
-                </List>
-            </Box>
+                {activity.items.map((item, index) => (
+                    <ChoiceQuestion
+                        key={`${item.question}-${index}`}
+                        question={`${index + 1}. ${item.question}`}
+                        options={item.options}
+                        correctIndex={item.correctIndex}
+                    />
+                ))}
+            </Stack>
         </Stack>
     );
 }

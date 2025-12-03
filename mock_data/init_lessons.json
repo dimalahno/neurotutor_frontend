@@ -1,9 +1,7 @@
 {
-  "_id": "uuid",
   "index": 1,
-  "createdAt": "now()",
-  "updatedAt": "now()",
   "title": "Jobs in Tech",
+  "slug": "jobs-in-tech",
   "lang_level": [
     "A2",
     "B1"
@@ -1207,14 +1205,17 @@
           "tracks": [
             {
               "trackId": "track_1_3",
+              "audioUrl": "track_1_3",
               "title": "Dialogue 1"
             },
             {
               "trackId": "track_1_4",
+              "audioUrl": "track_1_4",
               "title": "Dialogue 2"
             },
             {
               "trackId": "track_1_5",
+              "audioUrl": "track_1_5",
               "title": "Dialogue 3"
             }
           ],

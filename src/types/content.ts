@@ -66,8 +66,8 @@ export type VocabListActivity = ActivityBase<"vocab_list"> & {
 
 export type MatchingActivity = ActivityBase<"matching"> & {
     items: {
-        left: string;
-        rightOptions: string[];
+        question: string;
+        options: string[];
         correctIndex: number;
     }[];
 };

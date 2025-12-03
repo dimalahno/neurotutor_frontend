@@ -418,7 +418,7 @@ export function ActivityCard({ activity, index }: { activity: Activity; index: n
                     <Typography variant="subtitle2" color="text.secondary">
                         {formatActivityTitle(activity, index)}
                     </Typography>
-                    <Typography variant="h6">{activity.prompt || "Активность"}</Typography>
+                    <Typography variant="h6">{activity.prompt || "Vocabulary"}</Typography>
                     <ActivityMeta />
                 </Stack>
             </AccordionSummary>

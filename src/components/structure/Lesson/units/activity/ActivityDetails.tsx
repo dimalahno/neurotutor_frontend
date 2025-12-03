@@ -34,6 +34,7 @@ import type {
     WordOrderActivity,
 } from "../../../../../types/content";
 import { ChoiceQuestion } from "./ChoiceQuestion";
+import { GapFillInputItem } from "./GapFillInputItem";
 
 const activityLabels: Record<string, string> = {
     speaking_prompt: "Говорение",
@@ -152,18 +153,18 @@ function MatchingDetails({ activity }: { activity: MatchingActivity }) {
 
 function GapFillDetails({ activity }: { activity: GapFillActivity }) {
     return (
-        <Stack spacing={1}>
+        <Stack spacing={2}>
             {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
-            <List dense>
+            <Stack spacing={1.5}>
                 {activity.items.map((item, index) => (
-                    <ListItem key={`${item.sentence}-${index}`} sx={{ flexDirection: "column", alignItems: "flex-start" }}>
-                        <Typography>{item.sentence}</Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            Ответ: {item.correct}
-                        </Typography>
-                    </ListItem>
+                    <GapFillInputItem
+                        key={`${item.sentence}-${index}`}
+                        index={index + 1}
+                        sentence={item.sentence}
+                        correct={item.correct}
+                    />
                 ))}
-            </List>
+            </Stack>
         </Stack>
     );
 }

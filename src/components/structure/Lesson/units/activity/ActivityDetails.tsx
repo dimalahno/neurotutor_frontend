@@ -134,19 +134,18 @@ function VocabListDetails({ activity }: { activity: VocabListActivity }) {
 
 function MatchingDetails({ activity }: { activity: MatchingActivity }) {
     return (
-        <Stack spacing={1}>
+        <Stack spacing={2}>
             {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
-            <List dense>
+            <Stack spacing={1.5}>
                 {activity.items.map((item, index) => (
-                    <ListItem key={`${item.left}-${index}`} alignItems="flex-start" sx={{ flexDirection: "column", alignItems: "flex-start" }}>
-                        <Typography variant="subtitle1">{item.left}</Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            Варианты: {item.rightOptions.join(" · ")}
-                        </Typography>
-                        <Typography variant="body2">Правильный ответ: {item.rightOptions[item.correctIndex]}</Typography>
-                    </ListItem>
+                    <ChoiceQuestion
+                        key={`${item.question}-${index}`}
+                        question={`${index + 1}. ${item.question}`}
+                        options={item.options}
+                        correctIndex={item.correctIndex}
+                    />
                 ))}
-            </List>
+            </Stack>
         </Stack>
     );
 }

@@ -96,14 +96,15 @@ function App() {
                 minHeight: "100vh",
                 display: "flex",
                 flexDirection: "column",
-                background: "linear-gradient(180deg, rgba(168,107,255,0.08) 0%, rgba(255,61,243,0.05) 55%, rgba(39,229,255,0.04) 100%)",
+                background:
+                    "linear-gradient(180deg, rgba(76,175,80,0.08) 0%, rgba(3,169,244,0.06) 55%, rgba(255,152,0,0.04) 100%)",
             }}
         >
             <AppBar
                 position="static"
                 sx={{
-                    backgroundImage: "linear-gradient(90deg, #A86BFF 0%, #FF3DF3 50%, #8B4DFF 100%)",
-                    boxShadow: "0 6px 24px rgba(20,7,43,0.22)",
+                    backgroundImage: "linear-gradient(90deg, #4CAF50 0%, #03A9F4 50%, #FF9800 100%)",
+                    boxShadow: "0 6px 24px rgba(0,0,0,0.12)",
                 }}
             >
                 <Toolbar>

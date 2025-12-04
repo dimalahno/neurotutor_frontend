@@ -30,9 +30,9 @@ export function LessonPage({ lesson, onBack }: { lesson: Lesson; onBack: () => v
 
     const panelStyles = {
         p: 3,
-        background: "linear-gradient(135deg, rgba(168,107,255,0.08), rgba(255,61,243,0.06))",
-        border: "1px solid rgba(168,107,255,0.15)",
-        boxShadow: "0 12px 30px rgba(20,7,43,0.1)",
+        background: "linear-gradient(135deg, rgba(76,175,80,0.08), rgba(3,169,244,0.06))",
+        border: "1px solid rgba(3,169,244,0.15)",
+        boxShadow: "0 12px 30px rgba(0,0,0,0.08)",
     };
 
     return (

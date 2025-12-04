@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { Alert, Box, Button, Stack, Typography } from "@mui/material";
+import { Alert, Button, Stack, Typography } from "@mui/material";
 
 interface AudioFetchPlayerProps {
     audioFileName: string;
-    title?: string;
 }
 
-export function AudioFetchPlayer({ audioFileName, title = "Аудиофайл" }: AudioFetchPlayerProps) {
+export function AudioFetchPlayer({ audioFileName }: AudioFetchPlayerProps) {
     const [audioSrc, setAudioSrc] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -50,13 +49,6 @@ export function AudioFetchPlayer({ audioFileName, title = "Аудиофайл" }
 
     return (
         <Stack spacing={1}>
-            <Box>
-                <Typography variant="subtitle2" color="text.secondary">
-                    {title}
-                </Typography>
-                <Typography>{audioFileName}</Typography>
-            </Box>
-
             <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap>
                 <Button
                     variant="contained"

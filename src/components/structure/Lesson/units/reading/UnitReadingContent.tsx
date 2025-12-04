@@ -86,11 +86,6 @@ export function UnitReadingContent({ reading }: { reading: LessonReading }) {
                         Чтение
                     </Typography>
                     <Typography variant="h6">{reading.title}</Typography>
-                    {reading.audioUrl ? (
-                        <Typography variant="body2" color="text.secondary">
-                            Доступен аудиофайл: {reading.audioUrl}
-                        </Typography>
-                    ) : null}
                 </Stack>
             </AccordionSummary>
 

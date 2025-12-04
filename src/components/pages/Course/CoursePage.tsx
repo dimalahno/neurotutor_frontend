@@ -2,10 +2,17 @@ import { Button, Chip, Divider, List, ListItem, ListItemText, Paper, Stack, Typo
 import type { Course } from "../../../types/content";
 
 export function CoursePage({ courses, onOpenLesson }: { courses: Course[]; onOpenLesson: (lessonId: string) => void }) {
+    const cardStyles = {
+        p: 3,
+        background: "linear-gradient(135deg, rgba(168,107,255,0.08), rgba(255,61,243,0.06))",
+        border: "1px solid rgba(168,107,255,0.15)",
+        boxShadow: "0 12px 30px rgba(20,7,43,0.1)",
+    };
+
     return (
         <Stack spacing={3}>
             {courses.map((course) => (
-                <Paper key={course._id} sx={{ p: 3 }}>
+                <Paper key={course._id} sx={cardStyles}>
                     <Typography variant="h5" gutterBottom>
                         {course.title}
                     </Typography>
@@ -25,7 +32,12 @@ export function CoursePage({ courses, onOpenLesson }: { courses: Course[]; onOpe
                         {course.lessons.map((lesson) => (
                             <ListItem key={lesson.lesson_id} divider>
                                 <ListItemText primary={`Урок ${lesson.index}: ${lesson.title}`} />
-                                <Button variant="outlined" size="small" onClick={() => onOpenLesson(lesson.lesson_id)}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    size="small"
+                                    onClick={() => onOpenLesson(lesson.lesson_id)}
+                                >
                                     Открыть урок
                                 </Button>
                             </ListItem>

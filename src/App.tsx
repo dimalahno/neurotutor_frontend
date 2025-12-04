@@ -91,10 +91,23 @@ function App() {
     };
 
     return (
-        <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-            <AppBar position="static" color="primary">
+        <Box
+            sx={{
+                minHeight: "100vh",
+                display: "flex",
+                flexDirection: "column",
+                background: "linear-gradient(180deg, rgba(168,107,255,0.08) 0%, rgba(255,61,243,0.05) 55%, rgba(39,229,255,0.04) 100%)",
+            }}
+        >
+            <AppBar
+                position="static"
+                sx={{
+                    backgroundImage: "linear-gradient(90deg, #A86BFF 0%, #FF3DF3 50%, #8B4DFF 100%)",
+                    boxShadow: "0 6px 24px rgba(20,7,43,0.22)",
+                }}
+            >
                 <Toolbar>
-                    <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 700 }}>
                         NeuroTutor MVP
                     </Typography>
                     <Button
@@ -112,7 +125,9 @@ function App() {
                 </Toolbar>
             </AppBar>
 
-            <Container sx={{ mt: 3, mb: 3, flexGrow: 1 }}>{renderContent()}</Container>
+            <Container maxWidth="md" sx={{ mt: 3, mb: 3, flexGrow: 1 }}>
+                {renderContent()}
+            </Container>
 
             <Box component="footer" sx={{ py: 2, textAlign: "center" }}>
                 <Typography variant="caption" color="text.secondary">

@@ -124,6 +124,7 @@ export type ListeningMultipleChoiceActivity = ActivityBase<"listening_multiple_c
     tracks: {
         title: string;
         trackId: string;
+        audioUrl?: string;
     }[];
     items: {
         question: string;

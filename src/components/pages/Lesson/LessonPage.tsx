@@ -28,15 +28,22 @@ export function LessonPage({ lesson, onBack }: { lesson: Lesson; onBack: () => v
         [lesson.units],
     );
 
+    const panelStyles = {
+        p: 3,
+        background: "linear-gradient(135deg, rgba(168,107,255,0.08), rgba(255,61,243,0.06))",
+        border: "1px solid rgba(168,107,255,0.15)",
+        boxShadow: "0 12px 30px rgba(20,7,43,0.1)",
+    };
+
     return (
         <Stack spacing={3}>
             <LessonHeader lesson={lesson} totalActivities={totalActivities} onBack={onBack} />
 
-            <Paper sx={{ p: 3 }}>
+            <Paper sx={panelStyles}>
                 <AgendaList entries={agendaEntries} />
             </Paper>
 
-            <Paper sx={{ p: 3 }}>
+            <Paper sx={panelStyles}>
                 <Typography variant="h6" gutterBottom>
                     Юниты и активности
                 </Typography>

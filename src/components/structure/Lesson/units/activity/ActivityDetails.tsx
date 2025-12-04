@@ -35,6 +35,7 @@ import type {
 } from "../../../../../types/content";
 import { ChoiceQuestion } from "./ChoiceQuestion";
 import { GapFillInputItem } from "./GapFillInputItem";
+import { AudioFetchPlayer } from "../../../../AudioFetchPlayer";
 
 const activityLabels: Record<string, string> = {
     speaking_prompt: "Говорение",
@@ -286,7 +287,7 @@ function ErrorCorrectionDetails({ activity }: { activity: ErrorCorrectionActivit
 function ListenAndRepeatDetails({ activity }: { activity: ListenAndRepeatActivity }) {
     return (
         <Stack spacing={1}>
-            <Typography>Аудиотрек: {activity.audioUrl}</Typography>
+            <AudioFetchPlayer audioFileName={activity.audioUrl} title="Аудиотрек" />
             <List dense>
                 {activity.wordList.map((word) => (
                     <ListItem key={word}>

@@ -9,24 +9,29 @@ const theme = createTheme({
     palette: {
         mode: "light",
         primary: {
-            main: "#A86BFF", // Primary Violet
-            dark: "#8B4DFF", // Primary Purple Neon
+            main: "#4CAF50", // Primary Green
+            dark: "#388E3C",
         },
         secondary: {
-            main: "#27E5FF", // Aqua Neon accent
-            light: "#6CEBFF", // Soft Cyan accent
+            main: "#03A9F4", // Primary Blue accent
+            light: "#5FC9FF",
         },
         background: {
-            default: "#F2EDFF", // Soft Lavender Background
-            paper: "#ffffff",
+            default: "#F9F9F9", // Soft Light Background
+            paper: "#FFFFFF",
+        },
+        text: {
+            primary: "#333333",
+            secondary: "#4F4F4F",
         },
     },
     components: {
         MuiCssBaseline: {
             styleOverrides: {
                 body: {
-                    background: "radial-gradient(circle at 20% 20%, #FFFFFF 0, #F2EDFF 45%), radial-gradient(circle at 80% 0%, #FFFFFF 0, #F2EDFF 40%)",
-                    color: "#14072B",
+                    background:
+                        "linear-gradient(180deg, rgba(76,175,80,0.08) 0%, rgba(3,169,244,0.06) 55%, rgba(255,152,0,0.04) 100%), #F9F9F9",
+                    color: "#333333",
                 },
             },
         },

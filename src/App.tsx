@@ -103,7 +103,7 @@ function App() {
             <AppBar
                 position="static"
                 sx={{
-                    backgroundImage: "linear-gradient(90deg, #4CAF50 0%, #03A9F4 50%, #FF9800 100%)",
+                    backgroundImage: "linear-gradient(90deg, #4CAF50 0%, #03A9F4 100%)",
                     boxShadow: "0 6px 24px rgba(0,0,0,0.12)",
                 }}
             >

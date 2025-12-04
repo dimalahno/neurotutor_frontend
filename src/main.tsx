@@ -9,12 +9,12 @@ const theme = createTheme({
     palette: {
         mode: "light",
         primary: {
-            main: "#4CAF50", // Primary Green
-            dark: "#388E3C",
+            main: "#27E5FF", // Aqua Neon
+            dark: "#20b7cc",
         },
         secondary: {
-            main: "#03A9F4", // Primary Blue accent
-            light: "#5FC9FF",
+            main: "#6CEBFF", // Soft Cyan
+            light: "#9df3ff",
         },
         background: {
             default: "#F9F9F9", // Soft Light Background

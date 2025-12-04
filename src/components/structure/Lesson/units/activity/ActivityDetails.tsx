@@ -287,7 +287,7 @@ function ErrorCorrectionDetails({ activity }: { activity: ErrorCorrectionActivit
 function ListenAndRepeatDetails({ activity }: { activity: ListenAndRepeatActivity }) {
     return (
         <Stack spacing={1}>
-            <AudioFetchPlayer audioFileName={activity.audioUrl} title="Аудиотрек" />
+            <AudioFetchPlayer audioFileName={activity.audioUrl} />
             <List dense>
                 {activity.wordList.map((word) => (
                     <ListItem key={word}>
@@ -309,7 +309,7 @@ function ListeningMultipleChoiceDetails({ activity }: { activity: ListeningMulti
                             {activity.tracks.map((track) => (
                                 <ListItem key={track.trackId} sx={{ alignItems: "flex-start" }}>
                                     <Stack spacing={1} sx={{ width: "100%" }}>
-                                        <ListItemText primary={track.title} secondary={`ID: ${track.trackId}`} />
+                                        <ListItemText primary={track.title} />
                                         {track.audioUrl ? (
                                             <AudioFetchPlayer audioFileName={track.audioUrl} />
                                         ) : (

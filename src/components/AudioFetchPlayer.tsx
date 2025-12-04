@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { Alert, Button, Stack, Typography } from "@mui/material";
+import { Alert, Button, Stack} from "@mui/material";
 
 interface AudioFetchPlayerProps {
     audioFileName: string;
@@ -58,11 +58,6 @@ export function AudioFetchPlayer({ audioFileName }: AudioFetchPlayerProps) {
                 >
                     {loading ? "Загрузка..." : audioSrc ? "Обновить аудио" : "Получить аудио"}
                 </Button>
-                {!audioSrc ? (
-                    <Typography variant="body2" color="text.secondary">
-                        Нажмите, чтобы загрузить трек и воспроизвести его.
-                    </Typography>
-                ) : null}
             </Stack>
 
             {error ? <Alert severity="error">{error}</Alert> : null}

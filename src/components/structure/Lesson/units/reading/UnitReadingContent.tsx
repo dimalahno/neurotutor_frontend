@@ -1,5 +1,6 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Accordion, AccordionDetails, AccordionSummary, Divider, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
+import { AudioFetchPlayer } from "../../../../AudioFetchPlayer";
 import type { GlossaryEntry, LessonReading, LessonReadingTextBlock } from "../../../../../types/content";
 
 function ReadingTextSection({ text }: { text: LessonReading["text"] }) {
@@ -87,7 +88,7 @@ export function UnitReadingContent({ reading }: { reading: LessonReading }) {
                     <Typography variant="h6">{reading.title}</Typography>
                     {reading.audioUrl ? (
                         <Typography variant="body2" color="text.secondary">
-                            Аудио: {reading.audioUrl}
+                            Доступен аудиофайл: {reading.audioUrl}
                         </Typography>
                     ) : null}
                 </Stack>
@@ -95,6 +96,8 @@ export function UnitReadingContent({ reading }: { reading: LessonReading }) {
 
             <AccordionDetails sx={{ borderTop: "1px solid", borderColor: "divider", backgroundColor: "grey.50" }}>
                 <Stack spacing={2}>
+                    {reading.audioUrl ? <AudioFetchPlayer audioFileName={reading.audioUrl} /> : null}
+
                     <ReadingTextSection text={reading.text} />
 
                     {hasGlossary ? (

@@ -303,16 +303,23 @@ function ListeningMultipleChoiceDetails({ activity }: { activity: ListeningMulti
     return (
         <Stack spacing={2}>
             {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
-            <Box>
-                <Typography variant="subtitle2">Треки:</Typography>
-                <List dense>
-                    {activity.tracks.map((track) => (
-                        <ListItem key={track.trackId}>
-                            <ListItemText primary={track.title} secondary={`ID: ${track.trackId}`} />
-                        </ListItem>
-                    ))}
-                </List>
-            </Box>
+                    <Box>
+                        <Typography variant="subtitle2">Треки:</Typography>
+                        <List dense>
+                            {activity.tracks.map((track) => (
+                                <ListItem key={track.trackId} sx={{ alignItems: "flex-start" }}>
+                                    <Stack spacing={1} sx={{ width: "100%" }}>
+                                        <ListItemText primary={track.title} secondary={`ID: ${track.trackId}`} />
+                                        {track.audioUrl ? (
+                                            <AudioFetchPlayer audioFileName={track.audioUrl} />
+                                        ) : (
+                                            <Alert severity="warning">Для этого трека не указан аудиофайл.</Alert>
+                                        )}
+                                    </Stack>
+                                </ListItem>
+                            ))}
+                        </List>
+                    </Box>
             <Divider />
             <Stack spacing={1.5}>
                 <Typography variant="subtitle2">Вопросы:</Typography>

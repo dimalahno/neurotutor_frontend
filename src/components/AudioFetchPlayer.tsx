@@ -25,7 +25,7 @@ export function AudioFetchPlayer({ audioFileName }: AudioFetchPlayerProps) {
         setError(null);
 
         try {
-            const response = await fetch(`http://127.0.0.1:8088/lessons-files/${audioFileName}`);
+            const response = await fetch(`http://127.0.0.1:8089/lessons-files/${audioFileName}`);
 
             if (!response.ok) {
                 throw new Error("Не удалось получить аудиофайл");
@@ -56,7 +56,7 @@ export function AudioFetchPlayer({ audioFileName }: AudioFetchPlayerProps) {
                     onClick={handleLoadAudio}
                     disabled={loading}
                 >
-                    {loading ? "Загрузка..." : audioSrc ? "Обновить аудио" : "Получить аудио"}
+                    {loading ? "Загрузка..." : audioSrc ? "Обновить аудио" : "Послушать"}
                 </Button>
             </Stack>
 

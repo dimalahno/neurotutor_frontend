@@ -6,7 +6,7 @@ import type { ApiState, Course, Lesson } from "./types/content";
 
 type PageKey = "course" | "lesson";
 
-const API_BASE_URL = "http://127.0.0.1:8088/content";
+const API_BASE_URL = "http://127.0.0.1:8089/content";
 
 function App() {
     const [activePage, setActivePage] = useState<PageKey>("course");

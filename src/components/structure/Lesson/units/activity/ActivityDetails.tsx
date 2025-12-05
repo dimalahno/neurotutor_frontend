@@ -125,7 +125,7 @@ function VocabListDetails({ activity }: { activity: VocabListActivity }) {
                     </Typography>
                     {word.example ? (
                         <Typography variant="body2" color="text.secondary" fontStyle="italic">
-                            Пример: {word.example}
+                            Example: {word.example}
                         </Typography>
                     ) : null}
                 </ListItem>

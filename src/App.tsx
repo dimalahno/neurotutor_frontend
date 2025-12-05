@@ -1,4 +1,4 @@
-import { Alert, AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
+import { Alert, AppBar, Box, Button, Container, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CoursePage } from "./components/pages/Course/CoursePage";
 import { LessonPage } from "./components/pages/Lesson/LessonPage";
@@ -21,6 +21,8 @@ function App() {
         error: null,
     });
     const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
+    const [trainingAnchor, setTrainingAnchor] = useState<null | HTMLElement>(null);
+    const [supportAnchor, setSupportAnchor] = useState<null | HTMLElement>(null);
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -107,22 +109,68 @@ function App() {
                     boxShadow: "0 6px 24px rgba(0,0,0,0.12)",
                 }}
             >
-                <Toolbar>
-                    <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 700 }}>
+                <Toolbar sx={{ gap: 2 }}>
+                    <Typography variant="h6" sx={{ fontWeight: 700 }}>
                         NeuroTutor MVP
                     </Typography>
-                    <Button
-                        color={activePage === "course" ? "secondary" : "inherit"}
-                        onClick={() => setActivePage("course")}
+
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 2,
+                            flexGrow: 1,
+                            justifyContent: "center",
+                        }}
                     >
-                        Курс
-                    </Button>
-                    <Button
-                        color={activePage === "lesson" ? "secondary" : "inherit"}
-                        onClick={() => setActivePage("lesson")}
-                    >
-                        Урок
-                    </Button>
+                        <>
+                            <Button
+                                color="inherit"
+                                onClick={(event) => setTrainingAnchor(event.currentTarget)}
+                            >
+                                Обучение
+                            </Button>
+                            <Menu
+                                anchorEl={trainingAnchor}
+                                open={Boolean(trainingAnchor)}
+                                onClose={() => setTrainingAnchor(null)}
+                            >
+                                <MenuItem onClick={() => setTrainingAnchor(null)}>Курсы</MenuItem>
+                                <MenuItem onClick={() => setTrainingAnchor(null)}>Определение уровня</MenuItem>
+                                <MenuItem onClick={() => setTrainingAnchor(null)}>Разговорный клуб</MenuItem>
+                                <MenuItem onClick={() => setTrainingAnchor(null)}>
+                                    Тренажёр собеседований
+                                </MenuItem>
+                            </Menu>
+                        </>
+
+                        <>
+                            <Button
+                                color="inherit"
+                                onClick={(event) => setSupportAnchor(event.currentTarget)}
+                            >
+                                Поддержка
+                            </Button>
+                            <Menu
+                                anchorEl={supportAnchor}
+                                open={Boolean(supportAnchor)}
+                                onClose={() => setSupportAnchor(null)}
+                            >
+                                <MenuItem onClick={() => setSupportAnchor(null)}>Помощь</MenuItem>
+                                <MenuItem onClick={() => setSupportAnchor(null)}>FAQ</MenuItem>
+                                <MenuItem onClick={() => setSupportAnchor(null)}>Политика конфиденциальности</MenuItem>
+                                <MenuItem onClick={() => setSupportAnchor(null)}>Договор оферты</MenuItem>
+                                <MenuItem onClick={() => setSupportAnchor(null)}>Контакты</MenuItem>
+                            </Menu>
+                        </>
+                    </Box>
+
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                        <Button color="inherit">Вход</Button>
+                        <Button variant="outlined" color="inherit">
+                            Регистрация
+                        </Button>
+                    </Box>
                 </Toolbar>
             </AppBar>
 

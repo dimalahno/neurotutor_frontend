@@ -48,6 +48,7 @@ export type SpeakingPromptQuestion = {
     modelAnswer?: string;
     targetPatterns?: string[];
     keywords?: string[];
+    inputType?: string | string[];
 };
 
 export type SpeakingPromptActivity = ActivityBase<"speaking_prompt"> & {

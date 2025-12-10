@@ -5,8 +5,11 @@ import {
     AccordionSummary,
     Alert,
     Box,
+    Card,
+    CardContent,
     Chip,
     Divider,
+    Grid,
     List,
     ListItem,
     ListItemText,
@@ -345,13 +348,19 @@ function ListenAndRepeatDetails({ activity }: { activity: ListenAndRepeatActivit
     return (
         <Stack spacing={1}>
             <AudioFetchPlayer audioFileName={activity.audioUrl} />
-            <List dense>
+            <Grid container spacing={2}>
                 {activity.wordList.map((word) => (
-                    <ListItem key={word}>
-                        <ListItemText primary={word} />
-                    </ListItem>
+                    <Grid item xs={12} sm={6} md={4} key={word}>
+                        <Card variant="outlined" sx={{ height: "100%" }}>
+                            <CardContent>
+                                <Typography align="center" fontWeight="bold">
+                                    {word}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
                 ))}
-            </List>
+            </Grid>
         </Stack>
     );
 }

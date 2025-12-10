@@ -1189,7 +1189,9 @@
         {
           "id": "pronunciation_speaking_01",
           "type": "speaking_prompt",
-          "inputType": ["audio"],
+          "inputType": [
+            "audio"
+          ],
           "prompt": "Record yourself saying at least ten tech job titles from the list.",
           "autoCheck": {
             "type": "asr_phoneme_scorer"

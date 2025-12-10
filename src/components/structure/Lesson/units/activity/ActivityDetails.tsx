@@ -73,15 +73,9 @@ function ActivityMeta() {
 }
 
 function SpeakingPromptDetails({ activity }: { activity: SpeakingPromptActivity }) {
-    const inputTypes = Array.isArray(activity.inputType) ? activity.inputType : [activity.inputType];
     return (
         <Stack spacing={2}>
             {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
-            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                {inputTypes.map((type) => (
-                    <Chip key={type} label={`Формат ответа: ${type}`} size="small" />
-                ))}
-            </Stack>
             {activity.questions?.length > 0 && (
                 <List dense>
                     {activity.questions.map((question) => (
@@ -149,7 +143,7 @@ function FlipCard({
                 sx={{
                     position: "relative",
                     height: "100%",
-                    minHeight: 160,
+                    minHeight: 150,
                     transition: "transform 0.6s",
                     transformStyle: "preserve-3d",
                     transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
@@ -256,16 +250,9 @@ function MultipleChoiceDetails({ activity }: { activity: MultipleChoiceActivity 
 }
 
 function OpenAnswerDetails({ activity }: { activity: OpenAnswerActivity }) {
-    const inputTypes = Array.isArray(activity.inputType) ? activity.inputType : [activity.inputType];
-
     return (
         <Stack spacing={1}>
             {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
-            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                {inputTypes.map((type) => (
-                    <Chip key={type} label={`Формат ответа: ${type}`} size="small" />
-                ))}
-            </Stack>
             {activity.guidelines ? (
                 <Box>
                     <Typography variant="subtitle2">Подсказки:</Typography>

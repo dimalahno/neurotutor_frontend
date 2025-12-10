@@ -37,6 +37,7 @@ import type {
 import { ChoiceQuestion } from "./ChoiceQuestion";
 import { GapFillInputItem } from "./GapFillInputItem";
 import { AudioFetchPlayer } from "../../../../AudioFetchPlayer";
+import { ResponseInputPanel } from "./ResponseInputPanel";
 
 const activityLabels: Record<string, string> = {
     speaking_prompt: "Говорение",
@@ -101,6 +102,7 @@ function SpeakingPromptDetails({ activity }: { activity: SpeakingPromptActivity 
                                     Key words: {question.keywords.join(", ")}
                                 </Typography>
                             ) : null}
+                            <ResponseInputPanel inputType={question.inputType ?? activity.inputType} />
                         </ListItem>
                     ))}
                 </List>
@@ -265,6 +267,7 @@ function OpenAnswerDetails({ activity }: { activity: OpenAnswerActivity }) {
                     </List>
                 </Box>
             ) : null}
+            <ResponseInputPanel inputType={activity.inputType} />
         </Stack>
     );
 }
@@ -421,6 +424,7 @@ function RoleplayDetails({ activity }: { activity: RoleplayActivity }) {
                     </ListItem>
                 ))}
             </List>
+            <ResponseInputPanel inputType={inputTypes} />
         </Stack>
     );
 }

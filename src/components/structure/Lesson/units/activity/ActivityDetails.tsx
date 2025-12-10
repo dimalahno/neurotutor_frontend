@@ -93,17 +93,17 @@ function SpeakingPromptDetails({ activity }: { activity: SpeakingPromptActivity 
                             ) : null}
                             {question.modelAnswer ? (
                                 <Typography variant="body2" color="text.secondary">
-                                    Пример ответа: {question.modelAnswer}
+                                    Answer example: {question.modelAnswer}
                                 </Typography>
                             ) : null}
                             {question.targetPatterns ? (
                                 <Typography variant="body2" color="text.secondary">
-                                    Шаблоны: {question.targetPatterns.join("; ")}
+                                    Phrase patterns: {question.targetPatterns.join("; ")}
                                 </Typography>
                             ) : null}
                             {question.keywords ? (
                                 <Typography variant="body2" color="text.secondary">
-                                    Ключевые слова: {question.keywords.join(", ")}
+                                    Key words: {question.keywords.join(", ")}
                                 </Typography>
                             ) : null}
                         </ListItem>
@@ -356,12 +356,12 @@ function RoleplayDetails({ activity }: { activity: RoleplayActivity }) {
                         </Typography>
                         {turn.targetPatterns ? (
                             <Typography variant="body2" color="text.secondary">
-                                Шаблоны: {turn.targetPatterns.join("; ")}
+                                Phrase patterns: {turn.targetPatterns.join("; ")}
                             </Typography>
                         ) : null}
                         {turn.modelAnswer ? (
                             <Typography variant="body2" color="text.secondary">
-                                Пример ответа: {turn.modelAnswer}
+                                Answer example: {turn.modelAnswer}
                             </Typography>
                         ) : null}
                     </ListItem>

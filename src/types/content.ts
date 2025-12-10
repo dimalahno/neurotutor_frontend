@@ -37,7 +37,6 @@ type ActivityBase<TType extends string> = {
     id: string;
     type: TType;
     prompt?: string;
-    autoCheck?: AutoCheck;
     llmCheck?: LlmCheck;
 };
 
@@ -135,7 +134,6 @@ export type ListeningMultipleChoiceActivity = ActivityBase<"listening_multiple_c
 };
 
 export type RoleplayActivity = ActivityBase<"roleplay"> & {
-    scenario?: string;
     inputType: string | string[];
     turns: {
         id: string;

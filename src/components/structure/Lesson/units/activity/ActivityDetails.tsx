@@ -408,12 +408,6 @@ function RoleplayDetails({ activity }: { activity: RoleplayActivity }) {
     return (
         <Stack spacing={1}>
             {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
-            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                {activity.scenario ? <Chip label={`Сценарий: ${activity.scenario}`} size="small" color="secondary" /> : null}
-                {inputTypes.map((type) => (
-                    <Chip key={type} label={`Формат: ${type}`} size="small" />
-                ))}
-            </Stack>
             <List dense>
                 {activity.turns.map((turn) => (
                     <ListItem key={turn.id} sx={{ flexDirection: "column", alignItems: "flex-start" }}>

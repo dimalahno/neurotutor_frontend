@@ -9,6 +9,7 @@ import {
     List,
     ListItem,
     ListItemText,
+    Paper,
     Stack,
     Table,
     TableBody,
@@ -115,22 +116,53 @@ function SpeakingPromptDetails({ activity }: { activity: SpeakingPromptActivity 
 }
 
 function VocabListDetails({ activity }: { activity: VocabListActivity }) {
+    const rows = activity.words.reduce((acc, word, index) => {
+        if (index % 2 === 0) {
+            acc.push([word]);
+        } else {
+            acc[acc.length - 1].push(word);
+        }
+
+        return acc;
+    }, [] as typeof activity.words[][]);
+
     return (
-        <List dense>
-            {activity.words.map((word) => (
-                <ListItem key={word.term} alignItems="flex-start" sx={{ flexDirection: "column", alignItems: "flex-start" }}>
-                    <Typography variant="subtitle1">{word.term}</Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        {word.definition}
-                    </Typography>
-                    {word.example ? (
-                        <Typography variant="body2" color="text.secondary" fontStyle="italic">
-                            Example: {word.example}
-                        </Typography>
-                    ) : null}
-                </ListItem>
-            ))}
-        </List>
+        <Table size="small" sx={{ mt: 1 }}>
+            <TableBody>
+                {rows.map((row, rowIndex) => (
+                    <TableRow key={`vocab-row-${rowIndex}`} sx={{ verticalAlign: "top" }}>
+                        {row.map((word) => (
+                            <TableCell
+                                key={word.term}
+                                sx={{
+                                    width: "50%",
+                                    borderBottom: "none",
+                                    verticalAlign: "top",
+                                    pr: 2,
+                                }}
+                            >
+                                <Paper variant="outlined" sx={{ p: 2, height: "100%" }}>
+                                    <Stack spacing={0.5}>
+                                        <Typography variant="subtitle1">{word.term}</Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {word.definition}
+                                        </Typography>
+                                        {word.example ? (
+                                            <Typography variant="body2" color="text.secondary" fontStyle="italic">
+                                                Example: {word.example}
+                                            </Typography>
+                                        ) : null}
+                                    </Stack>
+                                </Paper>
+                            </TableCell>
+                        ))}
+                        {row.length === 1 ? (
+                            <TableCell sx={{ width: "50%", borderBottom: "none" }} />
+                        ) : null}
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
     );
 }
 

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
     Accordion,
     AccordionDetails,
@@ -9,7 +10,6 @@ import {
     List,
     ListItem,
     ListItemText,
-    Paper,
     Stack,
     Table,
     TableBody,
@@ -116,53 +116,88 @@ function SpeakingPromptDetails({ activity }: { activity: SpeakingPromptActivity 
 }
 
 function VocabListDetails({ activity }: { activity: VocabListActivity }) {
-    const rows = activity.words.reduce((acc, word, index) => {
-        if (index % 2 === 0) {
-            acc.push([word]);
-        } else {
-            acc[acc.length - 1].push(word);
-        }
+    return (
+        <Box
+            sx={{
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
+                gap: 2,
+                mt: 1,
+            }}
+        >
+            {activity.words.map((word) => (
+                <FlipCard key={word.term} term={word.term} definition={word.definition} example={word.example} />
+            ))}
+        </Box>
+    );
+}
 
-        return acc;
-    }, [] as typeof activity.words[][]);
+function FlipCard({
+    term,
+    definition,
+    example,
+}: {
+    term: string;
+    definition: string;
+    example?: string;
+}) {
+    const [flipped, setFlipped] = useState(false);
 
     return (
-        <Table size="small" sx={{ mt: 1 }}>
-            <TableBody>
-                {rows.map((row, rowIndex) => (
-                    <TableRow key={`vocab-row-${rowIndex}`} sx={{ verticalAlign: "top" }}>
-                        {row.map((word) => (
-                            <TableCell
-                                key={word.term}
-                                sx={{
-                                    width: "50%",
-                                    borderBottom: "none",
-                                    verticalAlign: "top",
-                                    pr: 2,
-                                }}
-                            >
-                                <Paper variant="outlined" sx={{ p: 2, height: "100%" }}>
-                                    <Stack spacing={0.5}>
-                                        <Typography variant="subtitle1">{word.term}</Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                            {word.definition}
-                                        </Typography>
-                                        {word.example ? (
-                                            <Typography variant="body2" color="text.secondary" fontStyle="italic">
-                                                Example: {word.example}
-                                            </Typography>
-                                        ) : null}
-                                    </Stack>
-                                </Paper>
-                            </TableCell>
-                        ))}
-                        {row.length === 1 ? (
-                            <TableCell sx={{ width: "50%", borderBottom: "none" }} />
+        <Box sx={{ perspective: 1000, cursor: "pointer" }} onClick={() => setFlipped((prev) => !prev)}>
+            <Box
+                sx={{
+                    position: "relative",
+                    height: "100%",
+                    minHeight: 160,
+                    transition: "transform 0.6s",
+                    transformStyle: "preserve-3d",
+                    transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                }}
+            >
+                <CardFace>
+                    <Typography variant="h6">{term}</Typography>
+                </CardFace>
+                <CardFace isBack>
+                    <Stack spacing={0.5}>
+                        <Typography variant="subtitle1">{definition}</Typography>
+                        {example ? (
+                            <Typography variant="body2" color="text.secondary" fontStyle="italic">
+                                Example: {example}
+                            </Typography>
                         ) : null}
-                    </TableRow>
-                ))}
-            </TableBody>
-        </Table>
+                    </Stack>
+                </CardFace>
+            </Box>
+        </Box>
+    );
+}
+
+function CardFace({ children, isBack = false }: { children: React.ReactNode; isBack?: boolean }) {
+    return (
+        <Box
+            sx={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                top: 0,
+                left: 0,
+                borderRadius: 2,
+                border: "1px solid",
+                borderColor: "divider",
+                p: 2,
+                boxSizing: "border-box",
+                backfaceVisibility: "hidden",
+                bgcolor: "background.paper",
+                transform: isBack ? "rotateY(180deg)" : "rotateY(0deg)",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                gap: 0.5,
+            }}
+        >
+            {children}
+        </Box>
     );
 }
 

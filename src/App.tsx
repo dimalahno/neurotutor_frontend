@@ -2,11 +2,10 @@ import { Alert, AppBar, Box, Button, Container, Menu, MenuItem, Toolbar, Typogra
 import { useEffect, useState } from "react";
 import { CoursePage } from "./components/pages/Course/CoursePage";
 import { LessonPage } from "./components/pages/Lesson/LessonPage";
+import { API_BASE_URL } from "./config";
 import type { ApiState, Course, Lesson } from "./types/content";
 
 type PageKey = "course" | "lesson";
-
-const API_BASE_URL = "http://127.0.0.1:8089/content";
 
 function App() {
     const [activePage, setActivePage] = useState<PageKey>("course");
@@ -28,7 +27,7 @@ function App() {
         const fetchCourses = async () => {
             setCoursesState({ data: null, loading: true, error: null });
             try {
-                const response = await fetch(`${API_BASE_URL}/courses`);
+                const response = await fetch(`${API_BASE_URL}/content/courses`);
 
                 if (!response.ok) {
                     throw new Error("Не удалось загрузить список курсов");
@@ -51,7 +50,7 @@ function App() {
         const fetchLesson = async () => {
             setLessonState({ data: null, loading: true, error: null });
             try {
-                const response = await fetch(`${API_BASE_URL}/lessons/${selectedLessonId}`);
+                const response = await fetch(`${API_BASE_URL}/content/lessons/${selectedLessonId}`);
 
                 if (!response.ok) {
                     throw new Error("Не удалось загрузить данные урока");

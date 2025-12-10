@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { Alert, Button, Stack} from "@mui/material";
+import { useEffect, useState } from "react";
+import { API_BASE_URL } from "../config";
 
 interface AudioFetchPlayerProps {
     audioFileName: string;
@@ -25,7 +26,7 @@ export function AudioFetchPlayer({ audioFileName }: AudioFetchPlayerProps) {
         setError(null);
 
         try {
-            const response = await fetch(`http://127.0.0.1:8089/lessons-files/${audioFileName}`);
+            const response = await fetch(`${API_BASE_URL}/lessons-files/${audioFileName}`);
 
             if (!response.ok) {
                 throw new Error("Не удалось получить аудиофайл");

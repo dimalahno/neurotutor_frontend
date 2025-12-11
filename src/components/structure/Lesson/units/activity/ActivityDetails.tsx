@@ -84,11 +84,6 @@ function SpeakingPromptDetails({ activity }: { activity: SpeakingPromptActivity 
                     {activity.questions.map((question) => (
                         <ListItem key={question.id} alignItems="flex-start" sx={{ flexDirection: "column", alignItems: "flex-start" }}>
                             <Typography variant="subtitle2">{question.prompt}</Typography>
-                            {question.expectedAnswerType ? (
-                                <Typography variant="caption" color="text.secondary">
-                                    Тип ответа: {question.expectedAnswerType}
-                                </Typography>
-                            ) : null}
                             {question.modelAnswer ? (
                                 <Typography variant="body2" color="text.secondary">
                                     Answer example: {question.modelAnswer}
@@ -407,8 +402,6 @@ function ListeningMultipleChoiceDetails({ activity }: { activity: ListeningMulti
 }
 
 function RoleplayDetails({ activity }: { activity: RoleplayActivity }) {
-    const inputTypes = Array.isArray(activity.inputType) ? activity.inputType : [activity.inputType];
-
     return (
         <Stack spacing={1}>
             {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
@@ -428,10 +421,10 @@ function RoleplayDetails({ activity }: { activity: RoleplayActivity }) {
                                 Answer example: {turn.modelAnswer}
                             </Typography>
                         ) : null}
+                        <ResponseInputPanel inputType={turn.inputType} />
                     </ListItem>
                 ))}
             </List>
-            <ResponseInputPanel inputType={inputTypes} />
         </Stack>
     );
 }

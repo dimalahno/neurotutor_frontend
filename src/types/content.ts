@@ -43,7 +43,6 @@ type ActivityBase<TType extends string> = {
 export type SpeakingPromptQuestion = {
     id: string;
     prompt: string;
-    expectedAnswerType?: string;
     modelAnswer?: string;
     targetPatterns?: string[];
     keywords?: string[];
@@ -147,7 +146,7 @@ export type RoleplayActivity = ActivityBase<"roleplay"> & {
         targetPatterns?: string[];
         keywords?: string[];
         modelAnswer?: string;
-        expectedAnswerType?: string;
+        inputType?: string | string[];
     }[];
 };
 

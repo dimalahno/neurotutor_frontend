@@ -101,8 +101,6 @@ export function ResponseInputPanel({ inputType }: { inputType?: string | string[
     return (
         <Stack spacing={1.5} sx={{ mt: 1.5 }}>
             <Divider />
-            <Typography variant="subtitle2">Ответ</Typography>
-
             {inputTypes.includes("text") ? (
                 <Stack spacing={1}>
                     <TextField

@@ -117,7 +117,11 @@ export type LlmAdaptiveActivity = ActivityBase<"llm_adaptive">;
 
 export type ListenAndRepeatActivity = ActivityBase<"listen_and_repeat"> & {
     audioUrl: string;
-    wordList: string[];
+    words: {
+        term: string;
+        translation: string;
+        transcript: string;
+    }[];
 };
 
 export type ListeningMultipleChoiceActivity = ActivityBase<"listening_multiple_choice"> & {

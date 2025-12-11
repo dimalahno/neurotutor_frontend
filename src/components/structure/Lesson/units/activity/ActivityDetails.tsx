@@ -5,11 +5,8 @@ import {
     AccordionSummary,
     Alert,
     Box,
-    Card,
-    CardContent,
     Chip,
     Divider,
-    Grid,
     List,
     ListItem,
     ListItemText,
@@ -125,21 +122,26 @@ function VocabListDetails({ activity }: { activity: VocabListActivity }) {
             }}
         >
             {activity.words.map((word) => (
-                <FlipCard key={word.term} term={word.term} definition={word.definition} example={word.example} />
+                <FlipCard
+                    key={word.term}
+                    front={<Typography variant="h6">{word.term}</Typography>}
+                    back={
+                        <Stack spacing={0.5}>
+                            <Typography variant="subtitle1">{word.definition}</Typography>
+                            {word.example ? (
+                                <Typography variant="body2" color="text.secondary" fontStyle="italic">
+                                    Example: {word.example}
+                                </Typography>
+                            ) : null}
+                        </Stack>
+                    }
+                />
             ))}
         </Box>
     );
 }
 
-function FlipCard({
-    term,
-    definition,
-    example,
-}: {
-    term: string;
-    definition: string;
-    example?: string;
-}) {
+function FlipCard({ front, back }: { front: React.ReactNode; back: React.ReactNode }) {
     const [flipped, setFlipped] = useState(false);
 
     return (
@@ -154,19 +156,8 @@ function FlipCard({
                     transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
                 }}
             >
-                <CardFace>
-                    <Typography variant="h6">{term}</Typography>
-                </CardFace>
-                <CardFace isBack>
-                    <Stack spacing={0.5}>
-                        <Typography variant="subtitle1">{definition}</Typography>
-                        {example ? (
-                            <Typography variant="body2" color="text.secondary" fontStyle="italic">
-                                Example: {example}
-                            </Typography>
-                        ) : null}
-                    </Stack>
-                </CardFace>
+                <CardFace>{front}</CardFace>
+                <CardFace isBack>{back}</CardFace>
             </Box>
         </Box>
     );
@@ -348,19 +339,28 @@ function ListenAndRepeatDetails({ activity }: { activity: ListenAndRepeatActivit
     return (
         <Stack spacing={1}>
             <AudioFetchPlayer audioFileName={activity.audioUrl} />
-            <Grid container spacing={2}>
-                {activity.wordList.map((word) => (
-                    <Grid item xs={12} sm={6} md={4} key={word}>
-                        <Card variant="outlined" sx={{ height: "100%" }}>
-                            <CardContent>
-                                <Typography align="center" fontWeight="bold">
-                                    {word}
+            <Box
+                sx={{
+                    display: "grid",
+                    gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
+                    gap: 2,
+                }}
+            >
+                {activity.words.map((word) => (
+                    <FlipCard
+                        key={word.term}
+                        front={<Typography variant="h6">{word.term}</Typography>}
+                        back={
+                            <Stack spacing={0.5} alignItems="center">
+                                <Typography variant="subtitle1">{word.translation}</Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    {word.transcript}
                                 </Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
+                            </Stack>
+                        }
+                    />
                 ))}
-            </Grid>
+            </Box>
         </Stack>
     );
 }

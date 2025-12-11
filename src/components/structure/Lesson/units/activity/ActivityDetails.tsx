@@ -74,10 +74,12 @@ function ActivityMeta() {
 }
 
 function SpeakingPromptDetails({ activity }: { activity: SpeakingPromptActivity }) {
+    const hasQuestions = activity.questions?.length > 0;
+
     return (
         <Stack spacing={2}>
             {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
-            {activity.questions?.length > 0 && (
+            {hasQuestions ? (
                 <List dense>
                     {activity.questions.map((question) => (
                         <ListItem key={question.id} alignItems="flex-start" sx={{ flexDirection: "column", alignItems: "flex-start" }}>
@@ -106,6 +108,8 @@ function SpeakingPromptDetails({ activity }: { activity: SpeakingPromptActivity 
                         </ListItem>
                     ))}
                 </List>
+            ) : (
+                <ResponseInputPanel inputType={activity.inputType} />
             )}
         </Stack>
     );

@@ -101,7 +101,8 @@ export type TableCompletionActivity = ActivityBase<"table_completion"> & {
 export type WordOrderActivity = ActivityBase<"word_order"> & {
     items: {
         words: string[];
-        solution: string;
+        correct: string;
+        inputType?: string[];
     }[];
 };
 

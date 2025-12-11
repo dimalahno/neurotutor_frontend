@@ -297,11 +297,12 @@ function WordOrderDetails({ activity }: { activity: WordOrderActivity }) {
         <Stack spacing={1}>
             <List dense>
                 {activity.items.map((item, index) => (
-                    <ListItem key={index} sx={{ flexDirection: "column", alignItems: "flex-start" }}>
+                    <ListItem key={index} sx={{ flexDirection: "column", alignItems: "flex-start", width: "100%"}}>
                         <Typography variant="body2" color="text.secondary">
                             Слова: {item.words.join(" ")}
                         </Typography>
-                        <Typography variant="body1">Решение: {item.solution}</Typography>
+                        <Typography variant="body1">Решение: {item.correct}</Typography>
+                        <ResponseInputPanel inputType={item.inputType} />
                     </ListItem>
                 ))}
             </List>

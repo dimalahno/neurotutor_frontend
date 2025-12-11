@@ -108,6 +108,7 @@ export function ResponseInputPanel({ inputType }: { inputType?: string | string[
                         placeholder="Напишите свой ответ здесь"
                         multiline
                         minRows={3}
+                        fullWidth
                         value={textValue}
                         onChange={(event) => setTextValue(event.target.value)}
                     />

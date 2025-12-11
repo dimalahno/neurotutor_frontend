@@ -1126,28 +1126,112 @@
           "id": "pronunciation_list_01",
           "type": "listen_and_repeat",
           "audioUrl": "track_1_2.mp3",
-          "wordList": [
-            "software developer",
-            "QA engineer",
-            "DevOps engineer",
-            "data scientist",
-            "UX writer",
-            "frontend developer",
-            "backend developer",
-            "product manager",
-            "project manager",
-            "support engineer",
-            "architect",
-            "DevOps",
-            "business analyst",
-            "machine learning expert",
-            "programmer",
-            "UI/UX designer",
-            "marketer",
-            "marketing specialist",
-            "CEO",
-            "CTO",
-            "COO"
+          "words": [
+            {
+              "term": "software developer",
+              "translation": "разработчик ПО",
+              "transcript": "ˈsɒftweə dɪˈveləpə"
+            },
+            {
+              "term": "QA engineer",
+              "translation": "инженер по качеству",
+              "transcript": "ˌkjuːˈeɪ ˌendʒɪˈnɪə"
+            },
+            {
+              "term": "DevOps engineer",
+              "translation": "DevOps-инженер",
+              "transcript": "ˈdevɒps ˌendʒɪˈnɪə"
+            },
+            {
+              "term": "data scientist",
+              "translation": "специалист по данным",
+              "transcript": "ˈdeɪtə ˈsaɪəntɪst"
+            },
+            {
+              "term": "UX writer",
+              "translation": "UX-райтер",
+              "transcript": "ˌjuːˈeks ˈraɪtə"
+            },
+            {
+              "term": "frontend developer",
+              "translation": "фронтенд-разработчик",
+              "transcript": "ˌfrʌntˈend dɪˈveləpə"
+            },
+            {
+              "term": "backend developer",
+              "translation": "бекенд-разработчик",
+              "transcript": "ˌbækˈend dɪˈveləpə"
+            },
+            {
+              "term": "product manager",
+              "translation": "продуктовый менеджер",
+              "transcript": "ˈprɒdʌkt ˈmænɪdʒə"
+            },
+            {
+              "term": "project manager",
+              "translation": "проектный менеджер",
+              "transcript": "ˈprɒdʒekt ˈmænɪdʒə"
+            },
+            {
+              "term": "support engineer",
+              "translation": "инженер поддержки",
+              "transcript": "səˈpɔːt ˌendʒɪˈnɪə"
+            },
+            {
+              "term": "architect",
+              "translation": "архитектор",
+              "transcript": "ˈɑːkɪtekt"
+            },
+            {
+              "term": "DevOps",
+              "translation": "DevOps-специалист",
+              "transcript": "ˈdevɒps"
+            },
+            {
+              "term": "business analyst",
+              "translation": "бизнес-аналитик",
+              "transcript": "ˈbɪznəs ˈænəlɪst"
+            },
+            {
+              "term": "machine learning expert",
+              "translation": "эксперт по машинному обучению",
+              "transcript": "məˈʃiːn ˈlɜːnɪŋ ˈekspɜːt"
+            },
+            {
+              "term": "programmer",
+              "translation": "программист",
+              "transcript": "ˈprəʊɡræmə"
+            },
+            {
+              "term": "UI/UX designer",
+              "translation": "UI/UX-дизайнер",
+              "transcript": "ˌjuːˈaɪ ˌjuːˈeks dɪˈzaɪnə"
+            },
+            {
+              "term": "marketer",
+              "translation": "маркетолог",
+              "transcript": "ˈmɑːkɪtə"
+            },
+            {
+              "term": "marketing specialist",
+              "translation": "специалист по маркетингу",
+              "transcript": "ˈmɑːkɪtɪŋ ˈspeʃəlɪst"
+            },
+            {
+              "term": "CEO",
+              "translation": "генеральный директор",
+              "transcript": "ˌsiː.iːˈəʊ"
+            },
+            {
+              "term": "CTO",
+              "translation": "технический директор",
+              "transcript": "ˌsiː.tiːˈəʊ"
+            },
+            {
+              "term": "COO",
+              "translation": "операционный директор",
+              "transcript": "ˌsiː.əʊˈəʊ"
+            }
           ],
           "llmCheck": {
             "enabled": false

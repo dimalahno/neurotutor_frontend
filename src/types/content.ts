@@ -107,7 +107,7 @@ export type WordOrderActivity = ActivityBase<"word_order"> & {
 
 export type ErrorCorrectionActivity = ActivityBase<"error_correction"> & {
     items: {
-        incorrect: string;
+        sentence: string;
         correct: string;
     }[];
 };

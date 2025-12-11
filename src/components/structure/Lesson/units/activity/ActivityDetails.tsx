@@ -315,7 +315,7 @@ function ErrorCorrectionDetails({ activity }: { activity: ErrorCorrectionActivit
             <List dense>
                 {activity.items.map((item, index) => (
                     <ListItem key={index} sx={{ flexDirection: "column", alignItems: "flex-start" }}>
-                        <Typography color="error">{item.incorrect}</Typography>
+                        <Typography color="error">{item.sentence}</Typography>
                         <Typography variant="body2" color="text.secondary">
                             Исправление: {item.correct}
                         </Typography>

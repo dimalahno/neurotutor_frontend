@@ -314,12 +314,12 @@ function ErrorCorrectionDetails({ activity }: { activity: ErrorCorrectionActivit
         <Stack spacing={1}>
             <List dense>
                 {activity.items.map((item, index) => (
-                    <ListItem key={index} sx={{ flexDirection: "column", alignItems: "flex-start" }}>
-                        <Typography color="error">{item.sentence}</Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            Исправление: {item.correct}
-                        </Typography>
-                    </ListItem>
+                    <GapFillInputItem
+                        key={`${item.sentence}-${index}`}
+                        index={index + 1}
+                        sentence={item.sentence}
+                        correct={item.correct}
+                    />
                 ))}
             </List>
         </Stack>

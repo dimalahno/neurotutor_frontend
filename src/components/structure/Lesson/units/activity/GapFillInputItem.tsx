@@ -32,7 +32,7 @@ export function GapFillInputItem({ index, sentence, correct }: GapFillInputItemP
                 fullWidth
                 value={value}
                 onChange={(event) => setValue(event.target.value)}
-                placeholder="Введите пропущенное слово"
+                placeholder={correct}
                 color={color}
                 label="Ваш ответ"
                 helperText={helperText}

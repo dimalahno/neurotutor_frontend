@@ -78,7 +78,6 @@ function SpeakingPromptDetails({ activity }: { activity: SpeakingPromptActivity 
 
     return (
         <Stack spacing={2}>
-            {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
             {hasQuestions ? (
                 <List dense>
                     {activity.questions.map((question) => (
@@ -193,7 +192,6 @@ function CardFace({ children, isBack = false }: { children: React.ReactNode; isB
 function MatchingDetails({ activity }: { activity: MatchingActivity }) {
     return (
         <Stack spacing={2}>
-            {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
             <Stack spacing={1.5}>
                 {activity.items.map((item, index) => (
                     <ChoiceQuestion
@@ -211,7 +209,6 @@ function MatchingDetails({ activity }: { activity: MatchingActivity }) {
 function GapFillDetails({ activity }: { activity: GapFillActivity }) {
     return (
         <Stack spacing={2}>
-            {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
             <Stack spacing={1.5}>
                 {activity.items.map((item, index) => (
                     <GapFillInputItem
@@ -229,7 +226,6 @@ function GapFillDetails({ activity }: { activity: GapFillActivity }) {
 function MultipleChoiceDetails({ activity }: { activity: MultipleChoiceActivity }) {
     return (
         <Stack spacing={2}>
-            {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
             <Stack spacing={1.5}>
                 {activity.items.map((item, index) => (
                     <ChoiceQuestion
@@ -247,7 +243,6 @@ function MultipleChoiceDetails({ activity }: { activity: MultipleChoiceActivity 
 function OpenAnswerDetails({ activity }: { activity: OpenAnswerActivity }) {
     return (
         <Stack spacing={1}>
-            {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
             {activity.guidelines ? (
                 <Box>
                     <Typography variant="subtitle2">Подсказки:</Typography>
@@ -270,7 +265,6 @@ function TableCompletionDetails({ activity }: { activity: TableCompletionActivit
 
     return (
         <Stack spacing={1}>
-            {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
             {activity.instruction ? (
                 <Typography variant="body2" color="text.secondary">
                     {activity.instruction}
@@ -301,7 +295,6 @@ function TableCompletionDetails({ activity }: { activity: TableCompletionActivit
 function WordOrderDetails({ activity }: { activity: WordOrderActivity }) {
     return (
         <Stack spacing={1}>
-            {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
             <List dense>
                 {activity.items.map((item, index) => (
                     <ListItem key={index} sx={{ flexDirection: "column", alignItems: "flex-start" }}>
@@ -319,7 +312,6 @@ function WordOrderDetails({ activity }: { activity: WordOrderActivity }) {
 function ErrorCorrectionDetails({ activity }: { activity: ErrorCorrectionActivity }) {
     return (
         <Stack spacing={1}>
-            {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
             <List dense>
                 {activity.items.map((item, index) => (
                     <ListItem key={index} sx={{ flexDirection: "column", alignItems: "flex-start" }}>
@@ -367,7 +359,6 @@ function ListenAndRepeatDetails({ activity }: { activity: ListenAndRepeatActivit
 function ListeningMultipleChoiceDetails({ activity }: { activity: ListeningMultipleChoiceActivity }) {
     return (
         <Stack spacing={2}>
-            {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
                     <Box>
                         <Typography variant="subtitle2">Треки:</Typography>
                         <List dense>
@@ -404,7 +395,6 @@ function ListeningMultipleChoiceDetails({ activity }: { activity: ListeningMulti
 function RoleplayDetails({ activity }: { activity: RoleplayActivity }) {
     return (
         <Stack spacing={1}>
-            {activity.prompt ? <Typography>{activity.prompt}</Typography> : null}
             <List dense>
                 {activity.turns.map((turn) => (
                     <ListItem key={turn.id} sx={{ flexDirection: "column", alignItems: "flex-start" }}>

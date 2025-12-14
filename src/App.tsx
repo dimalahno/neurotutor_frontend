@@ -2,13 +2,20 @@ import { Alert, AppBar, Box, Button, Container, Menu, MenuItem, Toolbar, Typogra
 import { useEffect, useState } from "react";
 import { CoursePage } from "./components/pages/Course/CoursePage";
 import { LessonPage } from "./components/pages/Lesson/LessonPage";
+import { LoginPage, type LoginFormValues } from "./components/pages/Login/LoginPage";
 import { RegistrationPage } from "./components/pages/Registration/RegistrationPage";
 import { API_BASE_URL } from "./config";
 import type { ApiState, Course, Lesson } from "./types/content";
 import type { AuthTokens, UserProfile } from "./utils/auth";
-import { buildFullName, extractSubFromJwt, loadStoredTokens, persistTokens } from "./utils/auth";
+import {
+    buildFullName,
+    clearStoredTokens,
+    extractSubFromJwt,
+    loadStoredTokens,
+    persistTokens,
+} from "./utils/auth";
 
-type PageKey = "course" | "lesson" | "register";
+type PageKey = "course" | "lesson" | "register" | "login";
 
 function App() {
     const [activePage, setActivePage] = useState<PageKey>("course");
@@ -46,17 +53,18 @@ function App() {
         setUserProfile(json);
     };
 
-    const handleLogin = async () => {
+    const handleLogin = async ({ email, password }: LoginFormValues) => {
         setAuthState({ loading: true, error: null });
         try {
             const response = await fetch(`${API_BASE_URL}/auth/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email: "dimalahno@rambler.ru", password: "12345" }),
+                body: JSON.stringify({ email, password }),
             });
 
             if (!response.ok) {
-                throw new Error("Не удалось выполнить вход");
+                const errorText = await response.text();
+                throw new Error(errorText || "Не удалось выполнить вход");
             }
 
             const tokens = (await response.json()) as AuthTokens;
@@ -68,11 +76,19 @@ function App() {
             }
 
             await fetchUserProfile(sub, tokens);
+            setActivePage("course");
             setAuthState({ loading: false, error: null });
         } catch (error) {
             const message = error instanceof Error ? error.message : String(error);
             setAuthState({ loading: false, error: message });
         }
+    };
+
+    const handleLogout = () => {
+        clearStoredTokens();
+        setUserProfile(null);
+        setAuthState({ loading: false, error: null });
+        setActivePage("course");
     };
 
     useEffect(() => {
@@ -150,6 +166,17 @@ function App() {
                         setSelectedLessonId(lessonId);
                         setActivePage("lesson");
                     }}
+                />
+            );
+        }
+
+        if (activePage === "login") {
+            return (
+                <LoginPage
+                    loading={authState.loading}
+                    error={authState.error}
+                    onSubmit={handleLogin}
+                    onBack={() => setActivePage("course")}
                 />
             );
         }
@@ -245,8 +272,18 @@ function App() {
                                 {userFullName}
                             </Typography>
                         )}
-                        <Button color="inherit" onClick={handleLogin} disabled={authState.loading}>
-                            {authState.loading ? "Входим..." : "Вход"}
+                        <Button
+                            color="inherit"
+                            onClick={() => {
+                                if (userProfile) {
+                                    handleLogout();
+                                } else {
+                                    setActivePage("login");
+                                }
+                            }}
+                            disabled={authState.loading}
+                        >
+                            {userProfile ? "Выход" : authState.loading ? "Входим..." : "Вход"}
                         </Button>
                         <Button
                             variant="outlined"

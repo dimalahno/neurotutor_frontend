@@ -2,10 +2,11 @@ import { Alert, AppBar, Box, Button, Container, Menu, MenuItem, Toolbar, Typogra
 import { useEffect, useState } from "react";
 import { CoursePage } from "./components/pages/Course/CoursePage";
 import { LessonPage } from "./components/pages/Lesson/LessonPage";
+import { RegistrationPage } from "./components/pages/Registration/RegistrationPage";
 import { API_BASE_URL } from "./config";
 import type { ApiState, Course, Lesson } from "./types/content";
 
-type PageKey = "course" | "lesson";
+type PageKey = "course" | "lesson" | "register";
 
 function App() {
     const [activePage, setActivePage] = useState<PageKey>("course");
@@ -81,6 +82,10 @@ function App() {
                     }}
                 />
             );
+        }
+
+        if (activePage === "register") {
+            return <RegistrationPage onBack={() => setActivePage("course")} />;
         }
 
         if (!selectedLessonId) return <Alert severity="info">Выберите урок, чтобы просмотреть детали.</Alert>;
@@ -166,7 +171,15 @@ function App() {
 
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                         <Button color="inherit">Вход</Button>
-                        <Button variant="outlined" color="inherit">
+                        <Button
+                            variant="outlined"
+                            color="inherit"
+                            onClick={() => {
+                                setTrainingAnchor(null);
+                                setSupportAnchor(null);
+                                setActivePage("register");
+                            }}
+                        >
                             Регистрация
                         </Button>
                     </Box>

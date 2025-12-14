@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, {useMemo, useState} from "react";
 import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
     Alert,
-    Box,
+    Box, Button,
     Chip,
     Divider,
     List,
@@ -292,16 +292,132 @@ function TableCompletionDetails({ activity }: { activity: TableCompletionActivit
     );
 }
 
+function WordSelector({
+                          words,
+                          correct
+                      }: {
+    words: string[];
+    correct: string;
+}) {
+    const [selected, setSelected] = useState<string[]>([]);
+    const [result, setResult] = useState<null | "correct" | "wrong">(null);
+    const [showHint, setShowHint] = useState(false);
+
+    const toggleWord = (word: string) => {
+        if (selected.includes(word)) {
+            setSelected(selected.filter(w => w !== word));
+            return;
+        }
+        setSelected([...selected, word]);
+    };
+
+    const checkAnswer = () => {
+        const userAnswerRaw = selected.join(" ").trim();
+        const userAnswer = userAnswerRaw.replace(/\s+([.,!?;:])/g, "$1");
+        const normalizedCorrect = correct.trim();
+
+        if (userAnswer === normalizedCorrect) {
+            setResult("correct");
+        } else {
+            setResult("wrong");
+        }
+    };
+
+    return (
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+
+            {/* Выбор слов */}
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+                {words.map((w, i) => {
+                    const isSelected = selected.includes(w);
+                    return (
+                        <Chip
+                            key={i}
+                            label={w}
+                            variant={isSelected ? "filled" : "outlined"}
+                            color={isSelected ? "primary" : "default"}
+                            onClick={() => toggleWord(w)}
+                        />
+                    );
+                })}
+            </Box>
+
+            {/* Собранный ответ */}
+            <Typography variant="body2">
+                Ваш ответ: {selected.join(" ")}
+            </Typography>
+
+            {/* Кнопки */}
+            <Box sx={{ display: "flex", gap: 1 }}>
+                <Button
+                    variant="contained"
+                    onClick={checkAnswer}
+                    disabled={selected.length === 0}
+                    sx={{ alignSelf: "flex-start" }}
+                >
+                    Проверить
+                </Button>
+
+                <Button
+                    variant="outlined"
+                    onClick={() => setShowHint(true)}
+                    sx={{ alignSelf: "flex-start" }}
+                >
+                    Подсказать
+                </Button>
+            </Box>
+
+            {/* Результат проверки */}
+            {result === "correct" && (
+                <Typography sx={{ color: "success.main" }}>
+                    ✔ Правильно!
+                </Typography>
+            )}
+
+            {result === "wrong" && (
+                <Typography sx={{ color: "error.main" }}>
+                    ✖ Неправильно
+                </Typography>
+            )}
+
+            {/* Подсказка */}
+            {showHint && (
+                <Typography sx={{ mt: 1, color: "info.main" }}>
+                    Правильный ответ: {correct}
+                </Typography>
+            )}
+        </Box>
+    );
+}
+
 function WordOrderDetails({ activity }: { activity: WordOrderActivity }) {
+    const itemsWithShuffledWords = useMemo(() => {
+        return activity.items.map(item => ({
+            ...item,
+            shuffledWords: [...item.words].sort(() => Math.random() - 0.5)
+        }));
+    }, [activity]);
+
     return (
         <Stack spacing={1}>
             <List dense>
-                {activity.items.map((item, index) => (
-                    <ListItem key={index} sx={{ flexDirection: "column", alignItems: "flex-start" }}>
-                        <Typography variant="body2" color="text.secondary">
-                            Слова: {item.words.join(" ")}
+                {itemsWithShuffledWords.map((item, index) => (
+                    <ListItem
+                        key={index}
+                        sx={{
+                            flexDirection: "column",
+                            alignItems: "flex-start",
+                            width: "100%"
+                        }}
+                    >
+                        <Typography variant="body1">Задание:</Typography>
+
+                        {/* Новый компонент выбора слов */}
+                        <WordSelector words={item.shuffledWords} correct={item.correct} />
+
+                        <Typography variant="body1" sx={{ mt: 1 }}>
+                            Правильный ответ: {item.correct}
                         </Typography>
-                        <Typography variant="body1">Решение: {item.solution}</Typography>
                     </ListItem>
                 ))}
             </List>
@@ -314,12 +430,12 @@ function ErrorCorrectionDetails({ activity }: { activity: ErrorCorrectionActivit
         <Stack spacing={1}>
             <List dense>
                 {activity.items.map((item, index) => (
-                    <ListItem key={index} sx={{ flexDirection: "column", alignItems: "flex-start" }}>
-                        <Typography color="error">{item.incorrect}</Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            Исправление: {item.correct}
-                        </Typography>
-                    </ListItem>
+                    <GapFillInputItem
+                        key={`${item.sentence}-${index}`}
+                        index={index + 1}
+                        sentence={item.sentence}
+                        correct={item.correct}
+                    />
                 ))}
             </List>
         </Stack>

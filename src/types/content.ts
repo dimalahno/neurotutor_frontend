@@ -101,13 +101,14 @@ export type TableCompletionActivity = ActivityBase<"table_completion"> & {
 export type WordOrderActivity = ActivityBase<"word_order"> & {
     items: {
         words: string[];
-        solution: string;
+        correct: string;
+        inputType?: string[];
     }[];
 };
 
 export type ErrorCorrectionActivity = ActivityBase<"error_correction"> & {
     items: {
-        incorrect: string;
+        sentence: string;
         correct: string;
     }[];
 };

@@ -5,6 +5,8 @@ import { LessonPage } from "./components/pages/Lesson/LessonPage";
 import { RegistrationPage } from "./components/pages/Registration/RegistrationPage";
 import { API_BASE_URL } from "./config";
 import type { ApiState, Course, Lesson } from "./types/content";
+import type { AuthTokens, UserProfile } from "./utils/auth";
+import { buildFullName, extractSubFromJwt, loadStoredTokens, persistTokens } from "./utils/auth";
 
 type PageKey = "course" | "lesson" | "register";
 
@@ -23,6 +25,55 @@ function App() {
     const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
     const [trainingAnchor, setTrainingAnchor] = useState<null | HTMLElement>(null);
     const [supportAnchor, setSupportAnchor] = useState<null | HTMLElement>(null);
+    const [authState, setAuthState] = useState<{ loading: boolean; error: string | null }>({
+        loading: false,
+        error: null,
+    });
+    const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+
+    const fetchUserProfile = async (sub: string, tokens: AuthTokens) => {
+        const response = await fetch(`${API_BASE_URL}/api/users/${sub}`, {
+            headers: {
+                Authorization: `${tokens.token_type} ${tokens.access_token}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error("Не удалось загрузить профиль пользователя");
+        }
+
+        const json = (await response.json()) as UserProfile;
+        setUserProfile(json);
+    };
+
+    const handleLogin = async () => {
+        setAuthState({ loading: true, error: null });
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/users`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: "dimalahno@rambler.ru", password: "12345" }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Не удалось выполнить вход");
+            }
+
+            const tokens = (await response.json()) as AuthTokens;
+            persistTokens(tokens);
+
+            const sub = extractSubFromJwt(tokens.access_token);
+            if (!sub) {
+                throw new Error("Не удалось определить пользователя из токена");
+            }
+
+            await fetchUserProfile(sub, tokens);
+            setAuthState({ loading: false, error: null });
+        } catch (error) {
+            const message = error instanceof Error ? error.message : String(error);
+            setAuthState({ loading: false, error: message });
+        }
+    };
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -43,6 +94,23 @@ function App() {
         };
 
         fetchCourses();
+    }, []);
+
+    useEffect(() => {
+        const tokens = loadStoredTokens();
+        if (!tokens) return;
+
+        const sub = extractSubFromJwt(tokens.access_token);
+        if (!sub) return;
+
+        setAuthState({ loading: true, error: null });
+
+        fetchUserProfile(sub, tokens)
+            .then(() => setAuthState({ loading: false, error: null }))
+            .catch((error) => {
+                const message = error instanceof Error ? error.message : String(error);
+                setAuthState({ loading: false, error: message });
+            });
     }, []);
 
     useEffect(() => {
@@ -67,6 +135,8 @@ function App() {
 
         fetchLesson();
     }, [selectedLessonId]);
+
+    const userFullName = buildFullName(userProfile);
 
     const renderContent = () => {
         if (activePage === "course") {
@@ -170,7 +240,14 @@ function App() {
                     </Box>
 
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                        <Button color="inherit">Вход</Button>
+                        {userFullName && (
+                            <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)" }}>
+                                {userFullName}
+                            </Typography>
+                        )}
+                        <Button color="inherit" onClick={handleLogin} disabled={authState.loading}>
+                            {authState.loading ? "Входим..." : "Вход"}
+                        </Button>
                         <Button
                             variant="outlined"
                             color="inherit"
@@ -185,6 +262,12 @@ function App() {
                     </Box>
                 </Toolbar>
             </AppBar>
+
+            {authState.error && (
+                <Container sx={{ mt: 2 }}>
+                    <Alert severity="error">{authState.error}</Alert>
+                </Container>
+            )}
 
             <Container maxWidth="md" sx={{ mt: 3, mb: 3, flexGrow: 1 }}>
                 {renderContent()}

@@ -301,6 +301,7 @@ function WordSelector({
 }) {
     const [selected, setSelected] = useState<string[]>([]);
     const [result, setResult] = useState<null | "correct" | "wrong">(null);
+    const [showHint, setShowHint] = useState(false);
 
     const toggleWord = (word: string) => {
         if (selected.includes(word)) {
@@ -312,10 +313,8 @@ function WordSelector({
 
     const checkAnswer = () => {
         const userAnswerRaw = selected.join(" ").trim();
-        const normalizedCorrect = correct.trim();
-
-        // убрать пробелы перед пунктуацией
         const userAnswer = userAnswerRaw.replace(/\s+([.,!?;:])/g, "$1");
+        const normalizedCorrect = correct.trim();
 
         if (userAnswer === normalizedCorrect) {
             setResult("correct");
@@ -348,17 +347,27 @@ function WordSelector({
                 Ваш ответ: {selected.join(" ")}
             </Typography>
 
-            {/* Кнопка проверки */}
-            <Button
-                variant="contained"
-                onClick={checkAnswer}
-                disabled={selected.length === 0}
-                sx={{ alignSelf: "flex-start" }}
-            >
-                Проверить
-            </Button>
+            {/* Кнопки */}
+            <Box sx={{ display: "flex", gap: 1 }}>
+                <Button
+                    variant="contained"
+                    onClick={checkAnswer}
+                    disabled={selected.length === 0}
+                    sx={{ alignSelf: "flex-start" }}
+                >
+                    Проверить
+                </Button>
 
-            {/* Результат */}
+                <Button
+                    variant="outlined"
+                    onClick={() => setShowHint(true)}
+                    sx={{ alignSelf: "flex-start" }}
+                >
+                    Подсказать
+                </Button>
+            </Box>
+
+            {/* Результат проверки */}
             {result === "correct" && (
                 <Typography sx={{ color: "success.main" }}>
                     ✔ Правильно!
@@ -368,6 +377,13 @@ function WordSelector({
             {result === "wrong" && (
                 <Typography sx={{ color: "error.main" }}>
                     ✖ Неправильно
+                </Typography>
+            )}
+
+            {/* Подсказка */}
+            {showHint && (
+                <Typography sx={{ mt: 1, color: "info.main" }}>
+                    Правильный ответ: {correct}
                 </Typography>
             )}
         </Box>

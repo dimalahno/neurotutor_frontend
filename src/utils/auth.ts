@@ -33,6 +33,12 @@ export function loadStoredTokens(): AuthTokens | null {
     return { access_token, refresh_token, token_type };
 }
 
+export function clearStoredTokens() {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("token_type");
+}
+
 function decodeBase64Url(value: string) {
     const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
     const padding = "=".repeat((4 - (normalized.length % 4)) % 4);

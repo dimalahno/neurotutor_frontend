@@ -414,10 +414,6 @@ function WordOrderDetails({ activity }: { activity: WordOrderActivity }) {
 
                         {/* Новый компонент выбора слов */}
                         <WordSelector words={item.shuffledWords} correct={item.correct} />
-
-                        <Typography variant="body1" sx={{ mt: 1 }}>
-                            Правильный ответ: {item.correct}
-                        </Typography>
                     </ListItem>
                 ))}
             </List>

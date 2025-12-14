@@ -32,7 +32,7 @@ function App() {
     const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
     const fetchUserProfile = async (sub: string, tokens: AuthTokens) => {
-        const response = await fetch(`${API_BASE_URL}/api/users/${sub}`, {
+        const response = await fetch(`${API_BASE_URL}/users/${sub}`, {
             headers: {
                 Authorization: `${tokens.token_type} ${tokens.access_token}`,
             },
@@ -49,7 +49,7 @@ function App() {
     const handleLogin = async () => {
         setAuthState({ loading: true, error: null });
         try {
-            const response = await fetch(`${API_BASE_URL}/api/users`, {
+            const response = await fetch(`${API_BASE_URL}/auth/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: "dimalahno@rambler.ru", password: "12345" }),

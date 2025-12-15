@@ -32,10 +32,33 @@ export async function submitTextForCheck(text: string): Promise<MockResponse> {
     }
 }
 
-export async function submitAudioForCheck(audio: Blob): Promise<MockResponse> {
+type AudioCheckPayload = {
+    modelAnswer?: string;
+    targetPatterns?: string[];
+    keywords?: string[];
+    systemPrompt?: string;
+    scoringDimensions?: string[];
+};
+
+export async function submitAudioForCheck(audio: Blob, payload: AudioCheckPayload = {}): Promise<MockResponse> {
     try {
         const formData = new FormData();
         formData.append("file", audio, "recording.webm");
+        if (payload.modelAnswer) {
+            formData.append("modelAnswer", payload.modelAnswer);
+        }
+        if (payload.targetPatterns?.length) {
+            formData.append("targetPatterns", JSON.stringify(payload.targetPatterns));
+        }
+        if (payload.keywords?.length) {
+            formData.append("keywords", JSON.stringify(payload.keywords));
+        }
+        if (payload.systemPrompt) {
+            formData.append("systemPrompt", payload.systemPrompt);
+        }
+        if (payload.scoringDimensions?.length) {
+            formData.append("scoringDimensions", JSON.stringify(payload.scoringDimensions));
+        }
 
         const response = await fetch(`${API_BASE_URL}/task/check_audio`, {
             method: "POST",

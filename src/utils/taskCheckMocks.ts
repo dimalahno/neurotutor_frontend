@@ -37,7 +37,8 @@ export async function submitAudioForCheck(audio: Blob): Promise<MockResponse> {
         const formData = new FormData();
         formData.append("file", audio, "recording.webm");
 
-        const response = await fetch(`${API_BASE_URL}/task/check_audio`, {
+        // const response = await fetch(`${API_BASE_URL}/task/check_audio`, {
+        const response = await fetch(`${API_BASE_URL}/task/transcribe_audio`, {
             method: "POST",
             body: formData,
         });
@@ -48,7 +49,7 @@ export async function submitAudioForCheck(audio: Blob): Promise<MockResponse> {
 
         return (await response.json()) as MockResponse;
     } catch (error) {
-        console.warn("Используем заглушку для /task/check_audio", error);
+        console.warn("Используем заглушку для /task/transcribe_audio", error);
         await delay(300);
         return {
             status: "stub",

@@ -20,13 +20,8 @@ export type AgendaEntry = {
 
 export type Agenda = Record<string, AgendaEntry>;
 
-export type AutoCheck = {
-    type: string;
-};
-
 export type LlmCheck = {
     enabled: boolean;
-    mode?: string;
     provider?: string;
     systemPrompt?: string;
     scoringDimensions?: string[];

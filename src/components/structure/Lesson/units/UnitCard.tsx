@@ -6,8 +6,6 @@ import { UnitGrammarExplanation } from "./grammar/UnitGrammarExplanation";
 import { UnitReadingContent } from "./reading/UnitReadingContent";
 
 export function UnitCard({ unit }: { unit: LessonUnit }) {
-    // const hasLLMTasks = unit.activities.some((activity) => activity.llmCheck?.enabled);
-    // const activitiesCount = unit.activities.length;
     const reading = unit.type === "reading" ? unit.reading : undefined;
     const grammarExplanation = unit.type === "grammar" ? unit.explanation : undefined;
 

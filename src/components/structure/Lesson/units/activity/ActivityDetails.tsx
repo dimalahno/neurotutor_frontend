@@ -98,12 +98,23 @@ function SpeakingPromptDetails({ activity }: { activity: SpeakingPromptActivity 
                                     Key words: {question.keywords.join(", ")}
                                 </Typography>
                             ) : null}
-                            <ResponseInputPanel inputType={question.inputType ?? activity.inputType} />
+                            <ResponseInputPanel
+                                inputType={question.inputType ?? activity.inputType}
+                                modelAnswer={question.modelAnswer}
+                                targetPatterns={question.targetPatterns}
+                                keywords={question.keywords}
+                                systemPrompt={activity.llmCheck?.systemPrompt}
+                                scoringDimensions={activity.llmCheck?.scoringDimensions}
+                            />
                         </ListItem>
                     ))}
                 </List>
             ) : (
-                <ResponseInputPanel inputType={activity.inputType} />
+                <ResponseInputPanel
+                    inputType={activity.inputType}
+                    systemPrompt={activity.llmCheck?.systemPrompt}
+                    scoringDimensions={activity.llmCheck?.scoringDimensions}
+                />
             )}
         </Stack>
     );
@@ -255,7 +266,11 @@ function OpenAnswerDetails({ activity }: { activity: OpenAnswerActivity }) {
                     </List>
                 </Box>
             ) : null}
-            <ResponseInputPanel inputType={activity.inputType} />
+            <ResponseInputPanel
+                inputType={activity.inputType}
+                systemPrompt={activity.llmCheck?.systemPrompt}
+                scoringDimensions={activity.llmCheck?.scoringDimensions}
+            />
         </Stack>
     );
 }
@@ -523,7 +538,14 @@ function RoleplayDetails({ activity }: { activity: RoleplayActivity }) {
                                 Answer example: {turn.modelAnswer}
                             </Typography>
                         ) : null}
-                        <ResponseInputPanel inputType={turn.inputType} />
+                        <ResponseInputPanel
+                            inputType={turn.inputType}
+                            modelAnswer={turn.modelAnswer}
+                            targetPatterns={turn.targetPatterns}
+                            keywords={turn.keywords}
+                            systemPrompt={activity.llmCheck?.systemPrompt}
+                            scoringDimensions={activity.llmCheck?.scoringDimensions}
+                        />
                     </ListItem>
                 ))}
             </List>

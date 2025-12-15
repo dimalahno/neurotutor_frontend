@@ -8,7 +8,23 @@ const normalizeInputTypes = (inputType?: string | string[]) => {
     return Array.from(new Set(list.filter(Boolean)));
 };
 
-export function ResponseInputPanel({ inputType }: { inputType?: string | string[] }) {
+type ResponseInputPanelProps = {
+    inputType?: string | string[];
+    modelAnswer?: string;
+    targetPatterns?: string[];
+    keywords?: string[];
+    systemPrompt?: string;
+    scoringDimensions?: string[];
+};
+
+export function ResponseInputPanel({
+    inputType,
+    modelAnswer,
+    targetPatterns,
+    keywords,
+    systemPrompt,
+    scoringDimensions,
+}: ResponseInputPanelProps) {
     const inputTypes = useMemo(() => normalizeInputTypes(inputType), [inputType]);
     const chunksRef = useRef<BlobPart[]>([]);
     const recorderRef = useRef<MediaRecorder | null>(null);
@@ -88,7 +104,13 @@ export function ResponseInputPanel({ inputType }: { inputType?: string | string[
         setFeedback(null);
         setIsSubmitting(true);
         try {
-            const response = await submitAudioForCheck(audioBlob);
+            const response = await submitAudioForCheck(audioBlob, {
+                modelAnswer,
+                targetPatterns,
+                keywords,
+                systemPrompt,
+                scoringDimensions,
+            });
             setFeedback(response.message ?? "Аудио отправлено на проверку (заглушка)");
         } catch (sendError) {
             const message = sendError instanceof Error ? sendError.message : String(sendError);

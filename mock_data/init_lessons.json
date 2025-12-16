@@ -428,8 +428,7 @@
               "id": "q1",
               "prompt": "How do you keep up with what’s going on in the world?",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "I keep up with the world by reading news websites and following experts on social media.",
               "targetPatterns": [
@@ -447,8 +446,7 @@
               "id": "q2",
               "prompt": "How much time do you think it takes to learn a new skill from scratch?",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "I think it takes several months to learn a new skill from scratch.",
               "targetPatterns": [
@@ -466,8 +464,7 @@
               "id": "q3",
               "prompt": "Are you normally concise when you speak?",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "Yes, I try to be concise when I speak because it helps others understand me faster.",
               "targetPatterns": [
@@ -484,8 +481,7 @@
               "id": "q4",
               "prompt": "What are some things you have a solid understanding of?",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "I have a solid understanding of programming basics and data analysis.",
               "targetPatterns": [
@@ -502,8 +498,7 @@
               "id": "q5",
               "prompt": "Which of these 5 jobs is the hardest to do? Which is the easiest? Why?",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "I think the hardest job is a software architect because it requires deep knowledge and responsibility. The easiest is a junior support specialist because the tasks are more basic.",
               "targetPatterns": [

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Alert, Box, Button, Divider, Stack, TextField, Typography } from "@mui/material";
-import { submitAudioForCheck, submitTextForCheck } from "../../../../../utils/taskCheckMocks";
+import { submitAudioForCheck, submitTextForCheck } from "../../../../../utils/taskCheck.ts";
 
 const normalizeInputTypes = (inputType?: string | string[]) => {
     if (!inputType) return [] as string[];
@@ -57,7 +57,7 @@ export function ResponseInputPanel({
                 systemPrompt,
                 scoringDimensions,
             });
-            setFeedback(response.message ?? "Текст отправлен на проверку (заглушка)");
+            setFeedback(response.message ?? "Текст отправлен на проверку");
         } catch (sendError) {
             const message = sendError instanceof Error ? sendError.message : String(sendError);
             setError(message);
@@ -114,7 +114,7 @@ export function ResponseInputPanel({
                 systemPrompt,
                 scoringDimensions,
             });
-            setFeedback(response.message ?? "Аудио отправлено на проверку (заглушка)");
+            setFeedback(response.message ?? "Аудио отправлено на проверку");
         } catch (sendError) {
             const message = sendError instanceof Error ? sendError.message : String(sendError);
             setError(message);

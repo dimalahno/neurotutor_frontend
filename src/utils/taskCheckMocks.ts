@@ -8,12 +8,21 @@ type MockResponse = {
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function submitTextForCheck(text: string): Promise<MockResponse> {
+type TextCheckPayload = {
+    systemPrompt?: string;
+    scoringDimensions?: string[];
+};
+
+export async function submitTextForCheck(text: string, payload: TextCheckPayload = {}): Promise<MockResponse> {
     try {
         const response = await fetch(`${API_BASE_URL}/task/check_text`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ text }),
+            body: JSON.stringify({
+                text,
+                systemPrompt: payload.systemPrompt ?? "",
+                scoringDimensions: payload.scoringDimensions ?? [],
+            }),
         });
 
         if (!response.ok) {
@@ -28,6 +37,8 @@ export async function submitTextForCheck(text: string): Promise<MockResponse> {
             status: "stub",
             message: "Текст принят (заглушка)",
             length: text.length,
+            systemPrompt: payload.systemPrompt ?? "",
+            scoringDimensions: payload.scoringDimensions ?? [],
         };
     }
 }

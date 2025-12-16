@@ -53,7 +53,10 @@ export function ResponseInputPanel({
         setFeedback(null);
         setIsSubmitting(true);
         try {
-            const response = await submitTextForCheck(textValue.trim());
+            const response = await submitTextForCheck(textValue.trim(), {
+                systemPrompt,
+                scoringDimensions,
+            });
             setFeedback(response.message ?? "Текст отправлен на проверку (заглушка)");
         } catch (sendError) {
             const message = sendError instanceof Error ? sendError.message : String(sendError);

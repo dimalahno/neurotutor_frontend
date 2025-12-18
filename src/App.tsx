@@ -1,9 +1,11 @@
-import { Alert, AppBar, Box, Button, Container, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
+import { Alert, AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CoursePage } from "./components/pages/Course/CoursePage";
 import { LessonPage } from "./components/pages/Lesson/LessonPage";
 import { LoginPage, type LoginFormValues } from "./components/pages/Login/LoginPage";
+import { PlaceholderPage } from "./components/pages/Placeholder/PlaceholderPage";
 import { RegistrationPage } from "./components/pages/Registration/RegistrationPage";
+import { StartPage } from "./components/pages/Start/StartPage";
 import { API_BASE_URL } from "./config";
 import type { ApiState, Course, Lesson } from "./types/content";
 import type { AuthTokens, UserProfile } from "./utils/auth";
@@ -15,10 +17,18 @@ import {
     persistTokens,
 } from "./utils/auth";
 
-type PageKey = "course" | "lesson" | "register" | "login";
+type PageKey =
+    | "home"
+    | "course"
+    | "lesson"
+    | "register"
+    | "login"
+    | "level"
+    | "club"
+    | "interview";
 
 function App() {
-    const [activePage, setActivePage] = useState<PageKey>("course");
+    const [activePage, setActivePage] = useState<PageKey>("home");
     const [coursesState, setCoursesState] = useState<ApiState<Course[]>>({
         data: null,
         loading: true,
@@ -30,12 +40,16 @@ function App() {
         error: null,
     });
     const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
-    const [trainingAnchor, setTrainingAnchor] = useState<null | HTMLElement>(null);
     const [authState, setAuthState] = useState<{ loading: boolean; error: string | null }>({
         loading: false,
         error: null,
     });
     const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+
+    const goHome = () => {
+        setActivePage("home");
+        setSelectedLessonId(null);
+    };
 
     const fetchUserProfile = async (sub: string, tokens: AuthTokens) => {
         const response = await fetch(`${API_BASE_URL}/users/${sub}`, {
@@ -75,7 +89,7 @@ function App() {
             }
 
             await fetchUserProfile(sub, tokens);
-            setActivePage("course");
+            setActivePage("home");
             setAuthState({ loading: false, error: null });
         } catch (error) {
             const message = error instanceof Error ? error.message : String(error);
@@ -87,7 +101,7 @@ function App() {
         clearStoredTokens();
         setUserProfile(null);
         setAuthState({ loading: false, error: null });
-        setActivePage("course");
+        goHome();
     };
 
     useEffect(() => {
@@ -154,6 +168,20 @@ function App() {
     const userFullName = buildFullName(userProfile);
 
     const renderContent = () => {
+        if (activePage === "home") {
+            return (
+                <StartPage
+                    onOpenCourses={() => {
+                        setSelectedLessonId(null);
+                        setActivePage("course");
+                    }}
+                    onOpenLevelCheck={() => setActivePage("level")}
+                    onOpenSpeakingClub={() => setActivePage("club")}
+                    onOpenInterviewTrainer={() => setActivePage("interview")}
+                />
+            );
+        }
+
         if (activePage === "course") {
             if (coursesState.loading) return <Typography>Загружаем курсы...</Typography>;
             if (coursesState.error || !coursesState.data) return <Alert severity="error">{coursesState.error}</Alert>;
@@ -161,6 +189,7 @@ function App() {
             return (
                 <CoursePage
                     courses={coursesState.data}
+                    onBack={goHome}
                     onOpenLesson={(lessonId) => {
                         setSelectedLessonId(lessonId);
                         setActivePage("lesson");
@@ -175,13 +204,43 @@ function App() {
                     loading={authState.loading}
                     error={authState.error}
                     onSubmit={handleLogin}
-                    onBack={() => setActivePage("course")}
+                    onBack={goHome}
                 />
             );
         }
 
         if (activePage === "register") {
-            return <RegistrationPage onBack={() => setActivePage("course")} />;
+            return <RegistrationPage onBack={goHome} />;
+        }
+
+        if (activePage === "level") {
+            return (
+                <PlaceholderPage
+                    title="Определение уровня"
+                    description="Раздел в разработке. Мы сообщим, когда он станет доступен."
+                    onBack={goHome}
+                />
+            );
+        }
+
+        if (activePage === "club") {
+            return (
+                <PlaceholderPage
+                    title="Разговорный клуб"
+                    description="Скоро здесь появятся разговорные практики и встречи."
+                    onBack={goHome}
+                />
+            );
+        }
+
+        if (activePage === "interview") {
+            return (
+                <PlaceholderPage
+                    title="Тренажёр собеседований"
+                    description="Готовим инструменты для подготовки к интервью."
+                    onBack={goHome}
+                />
+            );
         }
 
         if (!selectedLessonId) return <Alert severity="info">Выберите урок, чтобы просмотреть детали.</Alert>;
@@ -223,26 +282,9 @@ function App() {
                             justifyContent: "center",
                         }}
                     >
-                        <>
-                            <Button
-                                color="inherit"
-                                onClick={(event) => setTrainingAnchor(event.currentTarget)}
-                            >
-                                Обучение
-                            </Button>
-                            <Menu
-                                anchorEl={trainingAnchor}
-                                open={Boolean(trainingAnchor)}
-                                onClose={() => setTrainingAnchor(null)}
-                            >
-                                <MenuItem onClick={() => setTrainingAnchor(null)}>Курсы</MenuItem>
-                                <MenuItem onClick={() => setTrainingAnchor(null)}>Определение уровня</MenuItem>
-                                <MenuItem onClick={() => setTrainingAnchor(null)}>Разговорный клуб</MenuItem>
-                                <MenuItem onClick={() => setTrainingAnchor(null)}>
-                                    Тренажёр собеседований
-                                </MenuItem>
-                            </Menu>
-                        </>
+                        <Button color="inherit" onClick={goHome}>
+                            Обучение
+                        </Button>
                     </Box>
 
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -268,7 +310,6 @@ function App() {
                             variant="outlined"
                             color="inherit"
                             onClick={() => {
-                                setTrainingAnchor(null);
                                 setActivePage("register");
                             }}
                         >

@@ -603,6 +603,83 @@
       "order": 5,
       "activities": [
         {
+          "id": "pronunciation_list_01",
+          "type": "listen_and_repeat",
+          "audioUrl": "track_2_1.mp3",
+          "words": [
+            {
+              "term": "Can you make it to my birthday dinner?",
+              "translation": "Ты сможешь прийти на мой праздничный ужин?",
+              "transcript": "kæn juː meɪk ɪt tə maɪ ˈbɜːrθdeɪ ˈdɪnər"
+            },
+            {
+              "term": "Do you wanna see a movie tonight?",
+              "translation": "Хочешь посмотреть фильм сегодня вечером?",
+              "transcript": "duː juː ˈwɒnə siː ə ˈmuːvi təˈnaɪt"
+            },
+            {
+              "term": "Did you have time to watch the final episode?",
+              "translation": "Ты успел посмотреть финальную серию?",
+              "transcript": "dɪd juː hæv taɪm tə wɒtʃ ðə ˈfaɪnəl ˈepɪsəʊd"
+            },
+            {
+              "term": "Is it true that you lost your phone?",
+              "translation": "Правда, что ты потерял телефон?",
+              "transcript": "ɪz ɪt truː ðət juː lɒst jɔːr fəʊn"
+            },
+            {
+              "term": "Should we ask her to join us?",
+              "translation": "Нам стоит попросить её присоединиться?",
+              "transcript": "ʃʊd wiː ɑːsk hər tə dʒɔɪn ʌs"
+            },
+            {
+              "term": "What did you think of the project?",
+              "translation": "Что ты думаешь о проекте?",
+              "transcript": "wɒt dɪd juː θɪŋk əv ðə ˈprɒdʒekt"
+            },
+            {
+              "term": "Why are you so busy lately?",
+              "translation": "Почему ты так занят в последнее время?",
+              "transcript": "waɪ ɑːr juː səʊ ˈbɪzi ˈleɪtli"
+            },
+            {
+              "term": "Where should we go for lunch?",
+              "translation": "Куда нам пойти на обед?",
+              "transcript": "weər ʃʊd wiː ɡəʊ fə lʌntʃ"
+            },
+            {
+              "term": "Can you help me now or later?",
+              "translation": "Ты можешь помочь мне сейчас или позже?",
+              "transcript": "kæn juː help miː naʊ ɔːr ˈleɪtər"
+            },
+            {
+              "term": "Is the best time to meet on Monday, Tuesday or Wednesday?",
+              "translation": "Лучшее время для встречи — в понедельник, вторник или среду?",
+              "transcript": "ɪz ðə best taɪm tə miːt ɒn ˈmʌndeɪ, ˈtjuːzdeɪ ɔːr ˈwenzdeɪ"
+            },
+            {
+              "term": "Would you like vanilla, caramel, strawberry or chocolate?",
+              "translation": "Ты хочешь ваниль, карамель, клубнику или шоколад?",
+              "transcript": "wʊd juː laɪk vəˈnɪlə, ˈkærəməl, ˈstrɔːbəri ɔːr ˈtʃɒklət"
+            },
+            {
+              "term": "Actually, we still have some time.",
+              "translation": "Вообще-то у нас ещё есть время.",
+              "transcript": "ˈæktʃuəli wiː stɪl hæv sʌm taɪm"
+            },
+            {
+              "term": "In fact, I tried calling him the other day but he didn’t pick up.",
+              "translation": "На самом деле я пытался ему позвонить на днях, но он не ответил.",
+              "transcript": "ɪn fækt aɪ traɪd ˈkɔːlɪŋ hɪm ði ˈʌðər deɪ bʌt hiː ˈdɪdnt pɪk ʌp"
+            },
+            {
+              "term": "A few years ago, I got a chance to work with a great graphic designer.",
+              "translation": "Несколько лет назад у меня был шанс поработать с отличным графическим дизайнером.",
+              "transcript": "ə fjuː jɪəz əˈɡəʊ aɪ ɡɒt ə tʃɑːns tə wɜːk wɪð ə ɡreɪt ˈɡræfɪk dɪˈzaɪnər"
+            }
+          ]
+        },
+        {
           "id": "pronunciation_intonation_rules_01",
           "type": "info_block",
           "title": "Intonation rules",

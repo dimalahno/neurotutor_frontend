@@ -270,7 +270,7 @@ function App() {
             >
                 <Toolbar sx={{ gap: 2 }}>
                     <Typography variant="h6" sx={{ fontWeight: 700, flexGrow: 1 }}>
-                        NeuroTutor
+                        NU
                     </Typography>
 
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -317,7 +317,7 @@ function App() {
 
             <Box component="footer" sx={{ py: 2, textAlign: "center" }}>
                 <Typography variant="caption" color="text.secondary">
-                    NeuroTutor · React + FastAPI · {new Date().getFullYear()}
+                    Neural University · {new Date().getFullYear()}
                 </Typography>
             </Box>
         </Box>

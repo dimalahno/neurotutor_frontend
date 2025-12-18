@@ -680,12 +680,6 @@
           ]
         },
         {
-          "id": "pronunciation_intonation_rules_01",
-          "type": "info_block",
-          "title": "Intonation rules",
-          "text": "Use rising intonation for Yes/No questions and after breaks in long sentences. Use falling intonation for Wh-questions and at the end of statements. In choice questions, intonation rises on each option and falls at the end."
-        },
-        {
           "id": "pronunciation_intonation_practice_01",
           "type": "speaking_prompt",
           "prompt": "Read these sentences aloud using correct intonation (rising/falling). Record your audio:\n1) Can you make it to my birthday dinner?\n2) What did you think of the project?\n3) Can you help me now or later?\n4) Is the best time to meet on Monday, Tuesday or Wednesday?\n5) Actually, we still have some time.",

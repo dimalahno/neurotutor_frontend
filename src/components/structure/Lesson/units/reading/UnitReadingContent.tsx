@@ -1,7 +1,8 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Accordion, AccordionDetails, AccordionSummary, Divider, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Divider, Stack, Typography } from "@mui/material";
 import { AudioFetchPlayer } from "../../../../AudioFetchPlayer";
-import type { GlossaryEntry, LessonReading, LessonReadingTextBlock } from "../../../../../types/content";
+import type { LessonReading, LessonReadingTextBlock } from "../../../../../types/content";
+import { GlossaryList } from "../GlossaryList";
 
 function ReadingTextSection({ text }: { text: LessonReading["text"] }) {
     const sortedBlocks = [...text.content_data].sort((a, b) => a.order_id - b.order_id);
@@ -34,34 +35,6 @@ function ReadingParagraph({ block }: { block: LessonReadingTextBlock }) {
             <Typography variant="body2" color="text.secondary">
                 {block.content_text}
             </Typography>
-        </Stack>
-    );
-}
-
-function GlossaryList({ glossary }: { glossary: GlossaryEntry[] }) {
-    if (glossary.length === 0) return null;
-
-    return (
-        <Stack spacing={1}>
-            <Typography variant="subtitle1">Глоссарий</Typography>
-            <List dense>
-                {glossary.map((entry) => (
-                    <ListItem key={entry.word} alignItems="flex-start" sx={{ flexDirection: "column", alignItems: "flex-start" }}>
-                        <ListItemText
-                            primary={
-                                <Typography variant="body1" fontWeight={600}>
-                                    {entry.word}
-                                </Typography>
-                            }
-                            secondary={
-                                <Typography variant="body2" color="text.secondary">
-                                    {entry.definition}
-                                </Typography>
-                            }
-                        />
-                    </ListItem>
-                ))}
-            </List>
         </Stack>
     );
 }

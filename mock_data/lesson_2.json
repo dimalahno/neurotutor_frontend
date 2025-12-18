@@ -46,8 +46,7 @@
               "id": "q1",
               "prompt": "What are the advantages of working at a startup as opposed to working at a big company?",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "Working at a startup can mean faster growth, more responsibility and more impact, but it can be riskier.",
               "targetPatterns": [
@@ -66,8 +65,7 @@
               "id": "q2",
               "prompt": "Look at the tweet from the lesson. What pros does it mention? Do you agree?",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "It mentions being aligned, having risk tolerance and moving fast. I partly agree because it depends on the team.",
               "keywords": [
@@ -281,8 +279,7 @@
               "id": "q1",
               "prompt": "Are you currently in the market for anything? What is it?",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "Yes, I'm in the market for a new laptop.",
               "targetPatterns": [
@@ -296,8 +293,7 @@
               "id": "q2",
               "prompt": "Can you explain in your own words what marketers do?",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "Marketers research customers, position products and run campaigns to drive sales.",
               "keywords": [
@@ -310,8 +306,7 @@
               "id": "q3",
               "prompt": "Can you give examples of companies that managed to corner the market? How did they do it?",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "Some companies corner the market by building a strong brand and distribution network.",
               "keywords": [
@@ -646,8 +641,7 @@
               "id": "q1",
               "prompt": "Who are you? (role/title)",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "I'm a product manager at a small startup.",
               "targetPatterns": [
@@ -662,8 +656,7 @@
               "id": "q2",
               "prompt": "What does your company do? (mission)",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "We help small teams manage tasks and communicate clearly.",
               "keywords": [
@@ -675,8 +668,7 @@
               "id": "q3",
               "prompt": "What’s the value proposition? (what you do better)",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "We make onboarding faster with templates and automation.",
               "keywords": [
@@ -689,8 +681,7 @@
               "id": "q4",
               "prompt": "Grab attention: add one fact, story or statistic.",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "Over 40% of teams fail to onboard users properly—our product fixes that.",
               "keywords": [
@@ -727,8 +718,7 @@
               "role": "student",
               "type": "answer",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "I'm building a tool that helps teams create better pitch decks.",
               "targetPatterns": [
@@ -750,8 +740,7 @@
               "role": "student",
               "type": "answer",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "Teams waste time and lose investors because their pitch is unclear.",
               "keywords": [
@@ -770,8 +759,7 @@
               "role": "student",
               "type": "answer",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "We use templates and AI feedback to keep the pitch concise.",
               "keywords": [
@@ -791,8 +779,7 @@
               "role": "student",
               "type": "answer",
               "inputType": [
-                "audio",
-                "text"
+                "audio"
               ],
               "modelAnswer": "I need mentorship and introductions to early customers.",
               "keywords": [

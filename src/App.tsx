@@ -212,7 +212,7 @@ function App() {
             >
                 <Toolbar sx={{ gap: 2 }}>
                     <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                        NeuroTutor MVP
+                        NeuroTutor
                     </Typography>
 
                     <Box

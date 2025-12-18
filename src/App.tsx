@@ -269,23 +269,9 @@ function App() {
                 }}
             >
                 <Toolbar sx={{ gap: 2 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                    <Typography variant="h6" sx={{ fontWeight: 700, flexGrow: 1 }}>
                         NeuroTutor
                     </Typography>
-
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 2,
-                            flexGrow: 1,
-                            justifyContent: "center",
-                        }}
-                    >
-                        <Button color="inherit" onClick={goHome}>
-                            Обучение
-                        </Button>
-                    </Box>
 
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                         {userFullName && (

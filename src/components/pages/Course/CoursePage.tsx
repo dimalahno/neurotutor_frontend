@@ -1,7 +1,14 @@
+import { ArrowBack } from "@mui/icons-material";
 import { Button, Chip, Divider, List, ListItem, ListItemText, Paper, Stack, Typography } from "@mui/material";
 import type { Course } from "../../../types/content";
 
-export function CoursePage({ courses, onOpenLesson }: { courses: Course[]; onOpenLesson: (lessonId: string) => void }) {
+interface CoursePageProps {
+    courses: Course[];
+    onBack: () => void;
+    onOpenLesson: (lessonId: string) => void;
+}
+
+export function CoursePage({ courses, onBack, onOpenLesson }: CoursePageProps) {
     const cardStyles = {
         p: 3,
         background: "linear-gradient(135deg, rgba(76,175,80,0.08), rgba(3,169,244,0.06))",
@@ -11,6 +18,9 @@ export function CoursePage({ courses, onOpenLesson }: { courses: Course[]; onOpe
 
     return (
         <Stack spacing={3}>
+            <Button onClick={onBack} startIcon={<ArrowBack />} color="primary" sx={{ alignSelf: "flex-start" }}>
+                Назад
+            </Button>
             {courses.map((course) => (
                 <Paper key={course._id} sx={cardStyles}>
                     <Typography variant="h5" gutterBottom>

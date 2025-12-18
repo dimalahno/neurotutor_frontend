@@ -3,11 +3,13 @@ import { Accordion, AccordionDetails, AccordionSummary, Stack, Typography } from
 import type { LessonUnit } from "../../../../types/content";
 import { ActivityList } from "./activity/ActivityList";
 import { UnitGrammarExplanation } from "./grammar/UnitGrammarExplanation";
+import { UnitGlossary } from "./glossary/UnitGlossary";
 import { UnitReadingContent } from "./reading/UnitReadingContent";
 
 export function UnitCard({ unit }: { unit: LessonUnit }) {
     const reading = unit.type === "reading" ? unit.reading : undefined;
     const grammarExplanation = unit.type === "grammar" ? unit.explanation : undefined;
+    const glossary = unit.type === "glossary" ? unit.glossary : undefined;
 
     return (
         <Accordion disableGutters variant="outlined" slotProps={{ transition: { unmountOnExit: true } }}>
@@ -26,7 +28,8 @@ export function UnitCard({ unit }: { unit: LessonUnit }) {
                     )}
                     {reading ? <UnitReadingContent reading={reading} /> : null}
                     {grammarExplanation ? <UnitGrammarExplanation explanation={grammarExplanation} /> : null}
-                    <ActivityList activities={unit.activities} />
+                    {glossary ? <UnitGlossary glossary={glossary} /> : null}
+                    {unit.activities && unit.activities.length > 0 ? <ActivityList activities={unit.activities} /> : null}
                 </Stack>
             </AccordionDetails>
         </Accordion>

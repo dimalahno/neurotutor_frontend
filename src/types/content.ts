@@ -173,7 +173,8 @@ export type LessonUnit = {
     order: number;
     reading?: LessonReading;
     explanation?: LessonUnitExplanation;
-    activities: Activity[];
+    glossary?: GlossaryEntry[];
+    activities?: Activity[];
 };
 
 export type LessonUnitExplanation = {

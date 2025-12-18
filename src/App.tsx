@@ -31,7 +31,6 @@ function App() {
     });
     const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
     const [trainingAnchor, setTrainingAnchor] = useState<null | HTMLElement>(null);
-    const [supportAnchor, setSupportAnchor] = useState<null | HTMLElement>(null);
     const [authState, setAuthState] = useState<{ loading: boolean; error: string | null }>({
         loading: false,
         error: null,
@@ -244,26 +243,6 @@ function App() {
                                 </MenuItem>
                             </Menu>
                         </>
-
-                        <>
-                            <Button
-                                color="inherit"
-                                onClick={(event) => setSupportAnchor(event.currentTarget)}
-                            >
-                                Поддержка
-                            </Button>
-                            <Menu
-                                anchorEl={supportAnchor}
-                                open={Boolean(supportAnchor)}
-                                onClose={() => setSupportAnchor(null)}
-                            >
-                                <MenuItem onClick={() => setSupportAnchor(null)}>Помощь</MenuItem>
-                                <MenuItem onClick={() => setSupportAnchor(null)}>FAQ</MenuItem>
-                                <MenuItem onClick={() => setSupportAnchor(null)}>Политика конфиденциальности</MenuItem>
-                                <MenuItem onClick={() => setSupportAnchor(null)}>Договор оферты</MenuItem>
-                                <MenuItem onClick={() => setSupportAnchor(null)}>Контакты</MenuItem>
-                            </Menu>
-                        </>
                     </Box>
 
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -290,7 +269,6 @@ function App() {
                             color="inherit"
                             onClick={() => {
                                 setTrainingAnchor(null);
-                                setSupportAnchor(null);
                                 setActivePage("register");
                             }}
                         >

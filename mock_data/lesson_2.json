@@ -1002,6 +1002,63 @@
           }
         }
       ]
+    },
+    {
+      "id": "unit_glossary_startup_words",
+      "type": "glossary",
+      "title": "Glossary of Technical words",
+      "description": "Key startup and business words commonly used in the tech industry.",
+      "order": 9,
+      "terms": [
+        {
+          "word": "Startup",
+          "definition": "A newly established business. A software startup valued at more than one billion dollars is called a \"unicorn\", implying that such cases are extremely rare."
+        },
+        {
+          "word": "Shareholder",
+          "definition": "An owner of shares in a company."
+        },
+        {
+          "word": "Incubator",
+          "definition": "An organization that supports and develops early-stage companies."
+        },
+        {
+          "word": "Accelerator",
+          "definition": "An organization that provides startups with support services and funding opportunities."
+        },
+        {
+          "word": "Pitch deck",
+          "definition": "A presentation used to pitch a business idea or company, usually to investors."
+        },
+        {
+          "word": "API (Application Programming Interface)",
+          "definition": "A set of programming code that enables data transmission between software products."
+        },
+        {
+          "word": "CEO (Chief Executive Officer)",
+          "definition": "The highest-ranking executive in a company, responsible for major managerial decisions."
+        },
+        {
+          "word": "MVP (Minimum Viable Product)",
+          "definition": "A product version with just enough features to be usable by early customers."
+        },
+        {
+          "word": "VC (Venture Capital)",
+          "definition": "A type of financing that investors provide to startups and small businesses."
+        },
+        {
+          "word": "Bootstrap",
+          "definition": "To start and grow a business using minimal financial resources."
+        },
+        {
+          "word": "Scale up",
+          "definition": "To increase the production capacity or growth of a company or system."
+        },
+        {
+          "word": "Middleman",
+          "definition": "An inwordediary who buys goods from producers and sells them to retailers or consumers."
+        }
+      ]
     }
   ]
 }

@@ -38,7 +38,7 @@ export function CoursePage({ courses, onOpenLesson }: { courses: Course[]; onOpe
                                     size="small"
                                     onClick={() => onOpenLesson(lesson.lesson_id)}
                                 >
-                                    Открыть урок
+                                    Открыть
                                 </Button>
                             </ListItem>
                         ))}

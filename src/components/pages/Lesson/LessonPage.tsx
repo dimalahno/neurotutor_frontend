@@ -15,7 +15,17 @@ function sortUnits(units: LessonUnit[]) {
     return [...units].sort((a, b) => a.order - b.order);
 }
 
-export function LessonPage({ lesson, onBack }: { lesson: Lesson; onBack: () => void }) {
+export function LessonPage({
+    lesson,
+    onBack,
+    headerLabel,
+    backLabel,
+}: {
+    lesson: Lesson;
+    onBack: () => void;
+    headerLabel?: string;
+    backLabel?: string;
+}) {
     const agendaEntries = useMemo(() => mapAgendaToEntries(lesson.agenda), [lesson.agenda]);
     const sortedUnits = useMemo(() => sortUnits(lesson.units), [lesson.units]);
 
@@ -37,7 +47,13 @@ export function LessonPage({ lesson, onBack }: { lesson: Lesson; onBack: () => v
 
     return (
         <Stack spacing={3}>
-            <LessonHeader lesson={lesson} totalActivities={totalActivities} onBack={onBack} />
+            <LessonHeader
+                lesson={lesson}
+                totalActivities={totalActivities}
+                onBack={onBack}
+                label={headerLabel}
+                backLabel={backLabel}
+            />
 
             <Paper sx={panelStyles}>
                 <AgendaList entries={agendaEntries} />

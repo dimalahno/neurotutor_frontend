@@ -1,7 +1,19 @@
 import { Button, Chip, Paper, Stack, Typography } from "@mui/material";
 import type { Lesson } from "../../../types/content";
 
-export function LessonHeader({ lesson, totalActivities, onBack }: { lesson: Lesson; totalActivities: number; onBack: () => void }) {
+export function LessonHeader({
+    lesson,
+    totalActivities,
+    onBack,
+    label = "Урок",
+    backLabel = "Назад к курсу",
+}: {
+    lesson: Lesson;
+    totalActivities: number;
+    onBack: () => void;
+    label?: string;
+    backLabel?: string;
+}) {
     const panelStyles = {
         p: 3,
         background: "linear-gradient(135deg, rgba(76,175,80,0.08), rgba(3,169,244,0.06))",
@@ -14,7 +26,7 @@ export function LessonHeader({ lesson, totalActivities, onBack }: { lesson: Less
             <Stack spacing={2}>
                 <Stack spacing={1}>
                     <Typography variant="overline" color="text.secondary">
-                        Урок {lesson.index}
+                        {label} {lesson.index}
                     </Typography>
                     <Typography variant="h4">{lesson.title}</Typography>
 
@@ -32,7 +44,7 @@ export function LessonHeader({ lesson, totalActivities, onBack }: { lesson: Less
                 </Stack>
 
                 <Button variant="contained" color="secondary" onClick={onBack} sx={{ alignSelf: "flex-start" }}>
-                    Назад к курсу
+                    {backLabel}
                 </Button>
             </Stack>
         </Paper>

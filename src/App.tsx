@@ -1,6 +1,7 @@
 import { Alert, AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CoursePage } from "./components/pages/Course/CoursePage";
+import { LevelPage } from "./components/pages/Level/LevelPage";
 import { LessonPage } from "./components/pages/Lesson/LessonPage";
 import { LoginPage, type LoginFormValues } from "./components/pages/Login/LoginPage";
 import { PlaceholderPage } from "./components/pages/Placeholder/PlaceholderPage";
@@ -215,11 +216,7 @@ function App() {
 
         if (activePage === "level") {
             return (
-                <PlaceholderPage
-                    title="Определение уровня"
-                    description="Раздел в разработке. Мы сообщим, когда он станет доступен."
-                    onBack={goHome}
-                />
+                <LevelPage onBack={goHome} />
             );
         }
 

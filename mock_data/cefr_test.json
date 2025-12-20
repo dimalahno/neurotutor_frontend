@@ -628,6 +628,9 @@
               "level": "B2",
               "skill": "grammar",
               "task_type": "error_correction",
+              "inputType": [
+                "text"
+              ],
               "sentence": "She suggested to go to the office earlier.",
               "correct": "She suggested going to the office earlier."
             }

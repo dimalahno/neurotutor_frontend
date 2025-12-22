@@ -6,6 +6,8 @@ import { LessonPage } from "./components/pages/Lesson/LessonPage";
 import { LoginPage, type LoginFormValues } from "./components/pages/Login/LoginPage";
 import { PlaceholderPage } from "./components/pages/Placeholder/PlaceholderPage";
 import { RegistrationPage } from "./components/pages/Registration/RegistrationPage";
+import { SpeakingClubChatPage } from "./components/pages/SpeakingClub/SpeakingClubChatPage";
+import { SpeakingClubPage, type SpeakingTopic } from "./components/pages/SpeakingClub/SpeakingClubPage";
 import { StartPage } from "./components/pages/Start/StartPage";
 import { API_BASE_URL } from "./config";
 import type { ApiState, Course, Lesson } from "./types/content";
@@ -26,6 +28,7 @@ type PageKey =
     | "login"
     | "level"
     | "club"
+    | "club-chat"
     | "interview";
 
 function App() {
@@ -41,6 +44,7 @@ function App() {
         error: null,
     });
     const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
+    const [speakingTopic, setSpeakingTopic] = useState<SpeakingTopic | null>(null);
     const [authState, setAuthState] = useState<{ loading: boolean; error: string | null }>({
         loading: false,
         error: null,
@@ -50,6 +54,7 @@ function App() {
     const goHome = () => {
         setActivePage("home");
         setSelectedLessonId(null);
+        setSpeakingTopic(null);
     };
 
     const fetchUserProfile = async (sub: string, tokens: AuthTokens) => {
@@ -221,13 +226,27 @@ function App() {
         }
 
         if (activePage === "club") {
+            if (coursesState.loading) return <Typography>Загружаем темы...</Typography>;
+            if (coursesState.error || !coursesState.data) return <Alert severity="error">{coursesState.error}</Alert>;
+
             return (
-                <PlaceholderPage
-                    title="Разговорный клуб"
-                    description="Скоро здесь появятся разговорные практики и встречи."
+                <SpeakingClubPage
+                    courses={coursesState.data}
                     onBack={goHome}
+                    onStartChat={(topic) => {
+                        setSpeakingTopic(topic);
+                        setActivePage("club-chat");
+                    }}
                 />
             );
+        }
+
+        if (activePage === "club-chat") {
+            if (!speakingTopic) {
+                return <Alert severity="info">Выберите тему для общения.</Alert>;
+            }
+
+            return <SpeakingClubChatPage topic={speakingTopic} onBack={() => setActivePage("club")} />;
         }
 
         if (activePage === "interview") {

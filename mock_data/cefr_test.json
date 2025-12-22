@@ -465,10 +465,8 @@
               "level": "A2",
               "skill": "listening",
               "task_type": "multiple_choice",
-              "media": {
-                "audioUrl": "pt_a2_l_01.mp3",
-                "audioText": "Hi, Anna. Just a quick reminder about tomorrow’s meeting.\nSure. What time is it?\nIt starts at nine thirty in the morning.\nNine thirty. Great, thank you.\nNo problem. See you then."
-              },
+              "audioUrl": "pt_a2_l_01.mp3",
+              "audioText": "Hi, Anna. Just a quick reminder about tomorrow’s meeting. Sure. What time is it? It starts at nine thirty in the morning. Nine thirty. Great, thank you. No problem. See you then.",
               "question": "What time is the meeting?",
               "options": [
                 "9:00",
@@ -483,10 +481,8 @@
               "level": "B2",
               "skill": "listening",
               "task_type": "multiple_choice",
-              "media": {
-                "audioUrl": "pt_b2_l_01.mp3",
-                "audioText": "I actually enjoyed my previous job, and the team was great. But after a couple of years, I felt I wasn’t learning much anymore. I wanted more responsibility and clearer opportunities to grow professionally. The new role offers training, bigger projects, and a chance to lead a small team. So I changed jobs mainly for career development, not because of location or remote work."
-              },
+              "audioUrl": "pt_b2_l_01.mp3",
+              "audioText": "I actually enjoyed my previous job, and the team was great. But after a couple of years, I felt I wasn’t learning much anymore. I wanted more responsibility and clearer opportunities to grow professionally. The new role offers training, bigger projects, and a chance to lead a small team. So I changed jobs mainly for career development, not because of location or remote work.",
               "question": "Why did the speaker change jobs?",
               "options": [
                 "To work remotely",

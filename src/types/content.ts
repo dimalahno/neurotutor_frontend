@@ -78,6 +78,11 @@ export type MultipleChoiceActivity = ActivityBase<"multiple_choice"> & {
         question: string;
         options: string[];
         correctIndex: number;
+        media?: {
+            audioUrl?: string;
+            audioText?: string;
+        };
+        transcript_hint?: string;
     }[];
 };
 

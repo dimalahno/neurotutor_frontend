@@ -239,12 +239,14 @@ function MultipleChoiceDetails({ activity }: { activity: MultipleChoiceActivity 
         <Stack spacing={2}>
             <Stack spacing={1.5}>
                 {activity.items.map((item, index) => (
-                    <ChoiceQuestion
-                        key={`${item.question}-${index}`}
-                        question={`${index + 1}. ${item.question}`}
-                        options={item.options}
-                        correctIndex={item.correctIndex}
-                    />
+                    <Stack key={`${item.question}-${index}`} spacing={1}>
+                        {item.audioUrl ? <AudioFetchPlayer audioFileName={item.audioUrl} /> : null}
+                        <ChoiceQuestion
+                            question={`${index + 1}. ${item.question}`}
+                            options={item.options}
+                            correctIndex={item.correctIndex}
+                        />
+                    </Stack>
                 ))}
             </Stack>
         </Stack>

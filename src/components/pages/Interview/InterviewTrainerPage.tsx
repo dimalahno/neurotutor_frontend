@@ -60,7 +60,7 @@ export function InterviewTrainerPage({ courses, onBack, onOpenLesson }: Intervie
                                     size="small"
                                     onClick={() => onOpenLesson(lesson.lesson.lesson_id)}
                                 >
-                                    Открыть урок
+                                    Начать общение
                                 </Button>
                             </ListItem>
                         ))}

@@ -1,19 +1,10 @@
 import { ArrowBack } from "@mui/icons-material";
-import {
-    Button,
-    Divider,
-    Grid,
-    Paper,
-    Stack,
-    Typography,
-} from "@mui/material";
-import type { Course } from "../../../types/content";
+import { Button, Divider, List, ListItem, ListItemText, Paper, Stack, Typography } from "@mui/material";
+import type { Course, LessonSummary } from "../../../types/content";
 
 type InterviewLesson = {
     courseTitle: string;
-    lessonId: string;
-    lessonIndex: number;
-    lessonTitle: string;
+    lesson: LessonSummary;
 };
 
 interface InterviewTrainerPageProps {
@@ -26,28 +17,15 @@ export function InterviewTrainerPage({ courses, onBack, onOpenLesson }: Intervie
     const lessons: InterviewLesson[] = courses.flatMap((course) =>
         course.lessons.map((lesson) => ({
             courseTitle: course.title,
-            lessonId: lesson.lesson_id,
-            lessonIndex: lesson.index,
-            lessonTitle: lesson.title,
+            lesson,
         })),
     );
 
-    const containerCardStyles = {
+    const cardStyles = {
         p: 3,
         background: "linear-gradient(135deg, rgba(76,175,80,0.08), rgba(3,169,244,0.06))",
         border: "1px solid rgba(3,169,244,0.15)",
         boxShadow: "0 12px 30px rgba(0,0,0,0.08)",
-    };
-
-    const lessonCardStyles = {
-        p: 2.5,
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        gap: 1.5,
-        background: "rgba(255,255,255,0.8)",
-        border: "1px solid rgba(3,169,244,0.12)",
-        boxShadow: "0 10px 24px rgba(0,0,0,0.06)",
     };
 
     return (
@@ -55,11 +33,11 @@ export function InterviewTrainerPage({ courses, onBack, onOpenLesson }: Intervie
             <Button onClick={onBack} startIcon={<ArrowBack />} color="primary" sx={{ alignSelf: "flex-start" }}>
                 Назад
             </Button>
-            <Paper sx={containerCardStyles}>
+            <Paper sx={cardStyles}>
                 <Typography variant="h5" gutterBottom>
                     Тренажёр собеседований
                 </Typography>
-                <Typography variant="body1" color="text.secondary" gutterBottom>
+                <Typography variant="body1" color="text.secondary">
                     Выберите урок, чтобы потренироваться отвечать на вопросы и закреплять материал перед
                     собеседованием.
                 </Typography>
@@ -69,33 +47,24 @@ export function InterviewTrainerPage({ courses, onBack, onOpenLesson }: Intervie
                 {lessons.length === 0 ? (
                     <Typography color="text.secondary">Пока нет уроков для подготовки.</Typography>
                 ) : (
-                    <Stack spacing={2}>
-                        <Typography variant="subtitle1">Уроки</Typography>
-                        <Grid container spacing={2}>
-                            {lessons.map((lesson) => (
-                                <Grid item xs={12} sm={6} key={lesson.lessonId}>
-                                    <Paper sx={lessonCardStyles}>
-                                        <Typography variant="overline" color="text.secondary">
-                                            {lesson.courseTitle}
-                                        </Typography>
-                                        <Typography variant="h6" component="div">
-                                            Урок {lesson.lessonIndex}: {lesson.lessonTitle}
-                                        </Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                            Разберите вопросы и задания этого урока, чтобы уверенно чувствовать себя на интервью.
-                                        </Typography>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={() => onOpenLesson(lesson.lessonId)}
-                                        >
-                                            Открыть урок
-                                        </Button>
-                                    </Paper>
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </Stack>
+                    <List>
+                        {lessons.map((lesson) => (
+                            <ListItem key={lesson.lesson.lesson_id} divider>
+                                <ListItemText
+                                    primary={`Урок ${lesson.lesson.index}: ${lesson.lesson.title}`}
+                                    secondary={`Курс: ${lesson.courseTitle}`}
+                                />
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    size="small"
+                                    onClick={() => onOpenLesson(lesson.lesson.lesson_id)}
+                                >
+                                    Открыть урок
+                                </Button>
+                            </ListItem>
+                        ))}
+                    </List>
                 )}
             </Paper>
         </Stack>

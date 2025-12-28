@@ -1,10 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-
-const topics = [
-    { id: "conversation_club", title: "Разговорный клуб" },
-    { id: "tech_interview", title: "Техническое собеседование" },
-    { id: "behavioral", title: "Поведенческие вопросы" },
-];
+import {API_BASE_URL} from "../../../config.ts";
 
 type ChatStatus = "idle" | "created" | "connecting" | "active" | "ended" | "error";
 
@@ -94,7 +89,7 @@ export function VoiceChat({ initialLessonId = "", initialUserId, autoStart = fal
     const handleStop = useCallback(async () => {
         try {
             if (sessionId && userId.trim()) {
-                await postJson<StopResponse>("/voice/stop", {
+                await postJson<StopResponse>(`${API_BASE_URL}/voice/stop`, {
                     session_id: sessionId,
                     user_id: Number(userId),
                 });
@@ -133,7 +128,6 @@ export function VoiceChat({ initialLessonId = "", initialUserId, autoStart = fal
             };
 
             dc.onmessage = (event) => {
-                // eslint-disable-next-line no-console
                 console.log("Data channel message:", event.data);
             };
 
@@ -151,7 +145,7 @@ export function VoiceChat({ initialLessonId = "", initialUserId, autoStart = fal
             const offer = await pc.createOffer();
             await pc.setLocalDescription(offer);
 
-            const offerResponse = await postJson<OfferResponse>("/voice/webrtc/offer", {
+            const offerResponse = await postJson<OfferResponse>(`${API_BASE_URL}/voice/webrtc/offer`, {
                 session_id: session.session_id,
                 user_id: numericUserId,
                 sdp_offer: offer.sdp ?? "",
@@ -176,7 +170,7 @@ export function VoiceChat({ initialLessonId = "", initialUserId, autoStart = fal
     const handleStart = useCallback(
         async (explicitLessonId?: string, explicitUserId?: number) => {
             setError(null);
-            await cleanup();
+            cleanup();
             setStatus("connecting");
 
             const effectiveLessonId = explicitLessonId ?? lessonId.trim();
@@ -197,7 +191,7 @@ export function VoiceChat({ initialLessonId = "", initialUserId, autoStart = fal
             setLessonId(effectiveLessonId);
 
             try {
-                const startResponse = await postJson<StartResponse>("/voice/start", {
+                const startResponse = await postJson<StartResponse>(`${API_BASE_URL}/voice/start`, {
                     lesson_id: effectiveLessonId,
                     user_id: numericUserId,
                 });
@@ -233,32 +227,7 @@ export function VoiceChat({ initialLessonId = "", initialUserId, autoStart = fal
 
             <section>
                 <h3>Темы</h3>
-                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                    {topics.map((topic) => (
-                        <button key={topic.id} onClick={() => handleStart(topic.id)}>
-                            Начать: {topic.title}
-                        </button>
-                    ))}
-                </div>
             </section>
-
-            <label style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                Lesson ID
-                <input
-                    value={lessonId}
-                    onChange={(e) => setLessonId(e.target.value)}
-                    placeholder="lesson_id"
-                />
-            </label>
-
-            <label style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                User ID
-                <input
-                    value={userId}
-                    onChange={(e) => setUserId(e.target.value)}
-                    placeholder="user_id"
-                />
-            </label>
 
             <div style={{ display: "flex", gap: "8px" }}>
                 <button onClick={() => handleStart()} disabled={status === "connecting"}>
@@ -283,5 +252,3 @@ export function VoiceChat({ initialLessonId = "", initialUserId, autoStart = fal
         </div>
     );
 }
-
-export default VoiceChat;

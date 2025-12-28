@@ -4,7 +4,7 @@ import { CoursePage } from "./components/pages/Course/CoursePage";
 import { LevelPage } from "./components/pages/Level/LevelPage";
 import { LessonPage } from "./components/pages/Lesson/LessonPage";
 import { LoginPage, type LoginFormValues } from "./components/pages/Login/LoginPage";
-import { PlaceholderPage } from "./components/pages/Placeholder/PlaceholderPage";
+import { InterviewTrainerPage } from "./components/pages/Interview/InterviewTrainerPage";
 import { RegistrationPage } from "./components/pages/Registration/RegistrationPage";
 import { SpeakingClubChatPage } from "./components/pages/SpeakingClub/SpeakingClubChatPage";
 import { SpeakingClubPage, type SpeakingTopic } from "./components/pages/SpeakingClub/SpeakingClubPage";
@@ -250,11 +250,17 @@ function App() {
         }
 
         if (activePage === "interview") {
+            if (coursesState.loading) return <Typography>Загружаем уроки...</Typography>;
+            if (coursesState.error || !coursesState.data) return <Alert severity="error">{coursesState.error}</Alert>;
+
             return (
-                <PlaceholderPage
-                    title="Тренажёр собеседований"
-                    description="Готовим инструменты для подготовки к интервью."
+                <InterviewTrainerPage
+                    courses={coursesState.data}
                     onBack={goHome}
+                    onOpenLesson={(lessonId) => {
+                        setSelectedLessonId(lessonId);
+                        setActivePage("lesson");
+                    }}
                 />
             );
         }

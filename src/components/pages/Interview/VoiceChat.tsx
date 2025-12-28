@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 const topics = [
     { id: "conversation_club", title: "Разговорный клуб" },
@@ -17,6 +17,12 @@ type OfferResponse = {
 };
 type StopResponse = { session_id: string; status: "ended" };
 
+interface VoiceChatProps {
+    initialLessonId?: string;
+    initialUserId?: number;
+    autoStart?: boolean;
+}
+
 const postJson = async <T,>(url: string, body: unknown): Promise<T> => {
     const response = await fetch(url, {
         method: "POST",
@@ -32,14 +38,15 @@ const postJson = async <T,>(url: string, body: unknown): Promise<T> => {
     return (await response.json()) as T;
 };
 
-export function VoiceChat() {
-    const [lessonId, setLessonId] = useState("");
-    const [userId, setUserId] = useState("");
+export function VoiceChat({ initialLessonId = "", initialUserId, autoStart = false }: VoiceChatProps) {
+    const [lessonId, setLessonId] = useState(initialLessonId);
+    const [userId, setUserId] = useState(initialUserId !== undefined ? String(initialUserId) : "");
     const [status, setStatus] = useState<ChatStatus>("idle");
     const [sessionId, setSessionId] = useState<string | null>(null);
     const [callId, setCallId] = useState<string | null>(null);
     const [greeting, setGreeting] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
+    const [autoStartKey, setAutoStartKey] = useState<string | null>(null);
 
     const peerRef = useRef<RTCPeerConnection | null>(null);
     const dataChannelRef = useRef<RTCDataChannel | null>(null);
@@ -157,14 +164,23 @@ export function VoiceChat() {
         [greetPayload],
     );
 
+    useEffect(() => {
+        setLessonId(initialLessonId);
+    }, [initialLessonId]);
+
+    useEffect(() => {
+        if (initialUserId === undefined) return;
+        setUserId(String(initialUserId));
+    }, [initialUserId]);
+
     const handleStart = useCallback(
-        async (topicId?: string) => {
+        async (explicitLessonId?: string, explicitUserId?: number) => {
             setError(null);
             await cleanup();
             setStatus("connecting");
 
-            const effectiveLessonId = topicId ?? lessonId.trim();
-            const numericUserId = Number(userId);
+            const effectiveLessonId = explicitLessonId ?? lessonId.trim();
+            const numericUserId = explicitUserId ?? Number(userId);
 
             if (!effectiveLessonId) {
                 setError("Укажите lessonId или выберите тему");
@@ -200,6 +216,16 @@ export function VoiceChat() {
         },
         [cleanup, lessonId, setupPeerConnection, userId],
     );
+
+    useEffect(() => {
+        if (!autoStart || !initialLessonId || initialUserId === undefined) return;
+
+        const nextKey = `${initialLessonId}-${initialUserId}`;
+        if (nextKey === autoStartKey) return;
+
+        setAutoStartKey(nextKey);
+        void handleStart(initialLessonId, initialUserId);
+    }, [autoStart, autoStartKey, handleStart, initialLessonId, initialUserId]);
 
     return (
         <div style={{ display: "grid", gap: "12px", maxWidth: 600 }}>

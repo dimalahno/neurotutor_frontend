@@ -1,10 +1,11 @@
-import { Alert, AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
+import { Alert, AppBar, Box, Button, Container, Stack, Toolbar, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CoursePage } from "./components/pages/Course/CoursePage";
 import { LevelPage } from "./components/pages/Level/LevelPage";
 import { LessonPage } from "./components/pages/Lesson/LessonPage";
 import { LoginPage, type LoginFormValues } from "./components/pages/Login/LoginPage";
 import { InterviewTrainerPage } from "./components/pages/Interview/InterviewTrainerPage";
+import { VoiceChat } from "./components/pages/Interview/VoiceChat";
 import { RegistrationPage } from "./components/pages/Registration/RegistrationPage";
 import { SpeakingClubChatPage } from "./components/pages/SpeakingClub/SpeakingClubChatPage";
 import { SpeakingClubPage, type SpeakingTopic } from "./components/pages/SpeakingClub/SpeakingClubPage";
@@ -29,7 +30,8 @@ type PageKey =
     | "level"
     | "club"
     | "club-chat"
-    | "interview";
+    | "interview"
+    | "interview-chat";
 
 function App() {
     const [activePage, setActivePage] = useState<PageKey>("home");
@@ -204,6 +206,21 @@ function App() {
             );
         }
 
+        if (activePage === "interview-chat") {
+            if (!selectedLessonId) return <Alert severity="info">Выберите урок, чтобы начать разговор.</Alert>;
+
+            if (!userProfile) {
+                return <Alert severity="warning">Авторизуйтесь, чтобы начать голосовое общение.</Alert>;
+            }
+
+            return (
+                <Stack spacing={2}>
+                    <Button variant="outlined" onClick={() => setActivePage("interview")}>Назад</Button>
+                    <VoiceChat initialLessonId={selectedLessonId} initialUserId={userProfile.id} autoStart />
+                </Stack>
+            );
+        }
+
         if (activePage === "login") {
             return (
                 <LoginPage
@@ -259,7 +276,7 @@ function App() {
                     onBack={goHome}
                     onOpenLesson={(lessonId) => {
                         setSelectedLessonId(lessonId);
-                        setActivePage("lesson");
+                        setActivePage("interview-chat");
                     }}
                 />
             );

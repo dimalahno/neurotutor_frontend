@@ -1,5 +1,15 @@
+import {
+    Alert,
+    Box,
+    Button,
+    Chip,
+    Paper,
+    Stack,
+    TextField,
+    Typography,
+} from "@mui/material";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {API_BASE_URL} from "../../../config.ts";
+import { API_BASE_URL } from "../../../config.ts";
 
 type ChatStatus = "idle" | "created" | "connecting" | "active" | "ended" | "error";
 
@@ -222,33 +232,97 @@ export function VoiceChat({ initialLessonId = "", initialUserId, autoStart = fal
     }, [autoStart, autoStartKey, handleStart, initialLessonId, initialUserId]);
 
     return (
-        <div style={{ display: "grid", gap: "12px", maxWidth: 600 }}>
-            <h2>Voice Chat (WebRTC)</h2>
+        <Stack spacing={3} sx={{ maxWidth: 800, mx: "auto" }}>
+            <Paper
+                sx={{
+                    p: 3,
+                    background: "linear-gradient(135deg, rgba(76,175,80,0.08), rgba(3,169,244,0.06))",
+                    border: "1px solid rgba(3,169,244,0.15)",
+                    boxShadow: "0 12px 30px rgba(0,0,0,0.08)",
+                }}
+            >
+                <Stack spacing={2}>
+                    <Typography variant="h5">Voice Chat (WebRTC)</Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        Запустите голосовой чат, указав данные урока и пользователя. Логика работы идентична,
+                        изменено только отображение.
+                    </Typography>
+                </Stack>
 
-            <section>
-                <h3>Темы</h3>
-            </section>
+                <Stack spacing={2} sx={{ mt: 3 }}>
+                    {error && <Alert severity="error">{error}</Alert>}
 
-            <div style={{ display: "flex", gap: "8px" }}>
-                <button onClick={() => handleStart()} disabled={status === "connecting"}>
-                    Start
-                </button>
-                <button onClick={handleStop}>Stop</button>
-            </div>
+                    <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+                        <TextField
+                            label="Lesson ID"
+                            value={lessonId}
+                            onChange={(event) => setLessonId(event.target.value)}
+                            fullWidth
+                        />
+                        <TextField
+                            label="User ID"
+                            value={userId}
+                            onChange={(event) => setUserId(event.target.value)}
+                            fullWidth
+                        />
+                    </Stack>
 
-            <div>
-                <div>Статус: {status}</div>
-                {sessionId && <div>session_id: {sessionId}</div>}
-                {callId && <div>call_id: {callId}</div>}
-                {greeting && (
-                    <div>
-                        <strong>Greeting:</strong> {greeting}
-                    </div>
-                )}
-                {error && <div style={{ color: "red" }}>Ошибка: {error}</div>}
-            </div>
+                    <Stack direction={{ xs: "column", sm: "row" }} spacing={2} alignItems="center">
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => handleStart()}
+                            disabled={status === "connecting"}
+                        >
+                            {status === "connecting" ? "Подключение..." : "Start"}
+                        </Button>
+                        <Button variant="outlined" color="secondary" onClick={handleStop}>
+                            Stop
+                        </Button>
+                        <Chip
+                            label={`Статус: ${status}`}
+                            color={status === "error" || status === "ended" ? "secondary" : "primary"}
+                            variant="outlined"
+                            sx={{ ml: { xs: 0, sm: "auto" } }}
+                        />
+                    </Stack>
 
-            <audio ref={audioRef} autoPlay controls style={{ width: "100%" }} />
-        </div>
+                    <Box
+                        sx={{
+                            px: 2,
+                            py: 1.5,
+                            borderRadius: 2,
+                            backgroundColor: "rgba(3,169,244,0.08)",
+                            border: "1px solid rgba(3,169,244,0.12)",
+                        }}
+                    >
+                        <Stack spacing={0.5}>
+                            {sessionId && (
+                                <Typography variant="body2" color="text.secondary">
+                                    session_id: <strong>{sessionId}</strong>
+                                </Typography>
+                            )}
+                            {callId && (
+                                <Typography variant="body2" color="text.secondary">
+                                    call_id: <strong>{callId}</strong>
+                                </Typography>
+                            )}
+                            {greeting && (
+                                <Typography variant="body2">
+                                    <strong>Greeting:</strong> {greeting}
+                                </Typography>
+                            )}
+                        </Stack>
+                    </Box>
+
+                    <Box>
+                        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
+                            Аудиопоток
+                        </Typography>
+                        <audio ref={audioRef} autoPlay controls style={{ width: "100%" }} />
+                    </Box>
+                </Stack>
+            </Paper>
+        </Stack>
     );
 }

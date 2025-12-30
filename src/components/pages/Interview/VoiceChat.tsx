@@ -5,7 +5,6 @@ import {
     Chip,
     Paper,
     Stack,
-    TextField,
     Typography,
 } from "@mui/material";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -244,28 +243,12 @@ export function VoiceChat({ initialLessonId = "", initialUserId, autoStart = fal
                 <Stack spacing={2}>
                     <Typography variant="h5">Voice Chat (WebRTC)</Typography>
                     <Typography variant="body2" color="text.secondary">
-                        Запустите голосовой чат, указав данные урока и пользователя. Логика работы идентична,
-                        изменено только отображение.
+                        Запустите голосовой чат.
                     </Typography>
                 </Stack>
 
                 <Stack spacing={2} sx={{ mt: 3 }}>
                     {error && <Alert severity="error">{error}</Alert>}
-
-                    <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
-                        <TextField
-                            label="Lesson ID"
-                            value={lessonId}
-                            onChange={(event) => setLessonId(event.target.value)}
-                            fullWidth
-                        />
-                        <TextField
-                            label="User ID"
-                            value={userId}
-                            onChange={(event) => setUserId(event.target.value)}
-                            fullWidth
-                        />
-                    </Stack>
 
                     <Stack direction={{ xs: "column", sm: "row" }} spacing={2} alignItems="center">
                         <Button

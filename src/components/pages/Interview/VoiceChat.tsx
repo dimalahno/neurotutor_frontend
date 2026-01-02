@@ -24,8 +24,10 @@ type StopResponse = { session_id: string; status: "ended" };
 interface VoiceChatProps {
     initialLessonId?: string;
     initialUserId?: number;
-    autoStart?: boolean;
 }
+
+// ключ для восстановления/добивания хвоста
+const STORAGE_SESSION_KEY = "voice_session_id";
 
 const postJson = async <T,>(url: string, body: unknown): Promise<T> => {
     const response = await fetch(url, {
@@ -42,20 +44,28 @@ const postJson = async <T,>(url: string, body: unknown): Promise<T> => {
     return (await response.json()) as T;
 };
 
-export function VoiceChat({ initialLessonId = "", initialUserId, autoStart = false }: VoiceChatProps) {
+export function VoiceChat({
+                              initialLessonId = "",
+                              initialUserId,
+                          }: VoiceChatProps) {
     const [lessonId, setLessonId] = useState(initialLessonId);
-    const [userId, setUserId] = useState(initialUserId !== undefined ? String(initialUserId) : "");
+    const [userId, setUserId] = useState(
+        initialUserId !== undefined ? String(initialUserId) : "",
+    );
     const [status, setStatus] = useState<ChatStatus>("idle");
     const [sessionId, setSessionId] = useState<string | null>(null);
     const [callId, setCallId] = useState<string | null>(null);
     const [greeting, setGreeting] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
-    const [autoStartKey, setAutoStartKey] = useState<string | null>(null);
-
     const peerRef = useRef<RTCPeerConnection | null>(null);
     const dataChannelRef = useRef<RTCDataChannel | null>(null);
     const localStreamRef = useRef<MediaStream | null>(null);
     const audioRef = useRef<HTMLAudioElement | null>(null);
+
+
+    // refs для “последних” значений (нужны в pagehide/visibility handlers)
+    const sessionIdRef = useRef<string | null>(null); // <-- NEW
+    const userIdRef = useRef<string>(""); // <-- NEW
 
     const greetPayload = useMemo(() => {
         if (!greeting) return null;
@@ -95,6 +105,20 @@ export function VoiceChat({ initialLessonId = "", initialUserId, autoStart = fal
         dataChannelRef.current = null;
     }, []);
 
+    // best-effort stop (без await) для закрытия/рефреша вкладки
+    const stopBestEffort = useCallback((sid: string, uid: number) => {
+        try {
+            fetch(`${API_BASE_URL}/voice/stop`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ session_id: sid, user_id: uid }),
+                keepalive: true, // даёт шанс запросу уйти при закрытии вкладки
+            });
+        } catch {
+            // ignore
+        }
+    }, []);
+
     const handleStop = useCallback(async () => {
         try {
             if (sessionId && userId.trim()) {
@@ -109,6 +133,8 @@ export function VoiceChat({ initialLessonId = "", initialUserId, autoStart = fal
         } finally {
             cleanup();
             setSessionId(null);
+            sessionIdRef.current = null; // синхронизируем ref
+            localStorage.removeItem(STORAGE_SESSION_KEY); // убираем хвост
         }
     }, [cleanup, sessionId, userId]);
 
@@ -176,10 +202,29 @@ export function VoiceChat({ initialLessonId = "", initialUserId, autoStart = fal
         setUserId(String(initialUserId));
     }, [initialUserId]);
 
+
+    // синхронизация sessionId/userId в refs + localStorage для "хвоста"
+    useEffect(() => {
+        sessionIdRef.current = sessionId; // <-- NEW
+        if (sessionId) localStorage.setItem(STORAGE_SESSION_KEY, sessionId); // <-- NEW
+        else localStorage.removeItem(STORAGE_SESSION_KEY); // <-- NEW
+    }, [sessionId]);
+
+    useEffect(() => {
+        userIdRef.current = userId; // <-- NEW
+    }, [userId]);
+
     const handleStart = useCallback(
         async (explicitLessonId?: string, explicitUserId?: number) => {
             setError(null);
-            cleanup();
+
+            // если уже есть активная сессия — сначала корректно останавливаем
+            if (sessionIdRef.current) {
+                await handleStop(); // <-- NEW
+            } else {
+                cleanup();
+            }
+
             setStatus("connecting");
 
             const effectiveLessonId = explicitLessonId ?? lessonId.trim();
@@ -215,20 +260,56 @@ export function VoiceChat({ initialLessonId = "", initialUserId, autoStart = fal
                 setError(message);
                 setStatus("error");
                 cleanup();
+                setSessionId(null);
+                sessionIdRef.current = null; // <-- NEW
+                localStorage.removeItem(STORAGE_SESSION_KEY); // <-- NEW
             }
         },
-        [cleanup, lessonId, setupPeerConnection, userId],
+        [cleanup, handleStop, lessonId, setupPeerConnection, userId],
     );
 
+    // при закрытии/рефреше вкладки — best-effort stop + локальный cleanup
     useEffect(() => {
-        if (!autoStart || !initialLessonId || initialUserId === undefined) return;
+        const onPageHide = () => {
+            const sid = sessionIdRef.current ?? localStorage.getItem(STORAGE_SESSION_KEY);
+            const uid = Number(userIdRef.current);
 
-        const nextKey = `${initialLessonId}-${initialUserId}`;
-        if (nextKey === autoStartKey) return;
+            cleanup(); // <-- NEW: закрываем WebRTC локально
 
-        setAutoStartKey(nextKey);
-        void handleStart(initialLessonId, initialUserId);
-    }, [autoStart, autoStartKey, handleStart, initialLessonId, initialUserId]);
+            if (sid && Number.isFinite(uid)) {
+                stopBestEffort(sid, uid); // <-- NEW: пытаемся остановить серверную сессию
+            }
+        };
+
+        window.addEventListener("pagehide", onPageHide); // <-- NEW
+        const onVisibility = () => {
+            if (document.visibilityState === "hidden") onPageHide(); // <-- NEW
+        };
+        document.addEventListener("visibilitychange", onVisibility); // <-- NEW
+
+        return () => {
+            window.removeEventListener("pagehide", onPageHide);
+            document.removeEventListener("visibilitychange", onVisibility);
+            onPageHide(); // <-- NEW: при размонтировании компонента тоже добиваем хвост
+        };
+    }, [cleanup, stopBestEffort]);
+
+
+    // при загрузке страницы пробуем остановить хвост прошлой сессии
+    // (например, если вкладку закрыли и stop не успел уйти)
+    useEffect(() => {
+        const sid = localStorage.getItem(STORAGE_SESSION_KEY);
+        const uid = Number(userIdRef.current);
+
+        if (sid && Number.isFinite(uid)) {
+            void postJson<StopResponse>(`${API_BASE_URL}/voice/stop`, {
+                session_id: sid,
+                user_id: uid,
+            })
+                .catch(() => null)
+                .finally(() => localStorage.removeItem(STORAGE_SESSION_KEY));
+        }
+    }, []);
 
     return (
         <Stack spacing={3} sx={{ maxWidth: 800, mx: "auto" }}>

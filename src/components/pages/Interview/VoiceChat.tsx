@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { API_BASE_URL } from "../../../config.ts";
+// import {ArrowBack} from "@mui/icons-material";
 
 type ChatStatus = "idle" | "created" | "connecting" | "active" | "ended" | "error";
 
@@ -143,7 +144,14 @@ export function VoiceChat({
             const pc = new RTCPeerConnection();
             peerRef.current = pc;
 
-            const localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const localStream = await navigator.mediaDevices.getUserMedia({
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true,
+                },
+            });
+
             localStreamRef.current = localStream;
             localStream.getTracks().forEach((track) => pc.addTrack(track, localStream));
 
@@ -313,6 +321,11 @@ export function VoiceChat({
 
     return (
         <Stack spacing={3} sx={{ maxWidth: 800, mx: "auto" }}>
+
+            {/*<Button onClick={onBack} startIcon={<ArrowBack />} color="primary" sx={{ alignSelf: "flex-start" }}>*/}
+            {/*    Назад к темам*/}
+            {/*</Button>*/}
+
             <Paper
                 sx={{
                     p: 3,
@@ -351,6 +364,13 @@ export function VoiceChat({
                         />
                     </Stack>
 
+                    <Box>
+                        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
+                            Аудиопоток
+                        </Typography>
+                        <audio ref={audioRef} autoPlay controls style={{ width: "100%" }} />
+                    </Box>
+
                     <Box
                         sx={{
                             px: 2,
@@ -377,13 +397,6 @@ export function VoiceChat({
                                 </Typography>
                             )}
                         </Stack>
-                    </Box>
-
-                    <Box>
-                        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
-                            Аудиопоток
-                        </Typography>
-                        <audio ref={audioRef} autoPlay controls style={{ width: "100%" }} />
                     </Box>
                 </Stack>
             </Paper>

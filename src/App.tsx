@@ -1,4 +1,4 @@
-import { Alert, AppBar, Box, Button, Container, Stack, Toolbar, Typography } from "@mui/material";
+import { Alert, AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CoursePage } from "./components/pages/Course/CoursePage";
 import { LevelPage } from "./components/pages/Level/LevelPage";

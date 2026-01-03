@@ -1,15 +1,7 @@
-import {
-    Alert,
-    Box,
-    Button,
-    Chip,
-    Paper,
-    Stack,
-    Typography,
-} from "@mui/material";
+import { Alert, Box, Button, Chip, Paper, Stack, Typography } from "@mui/material";
+import { ArrowBack } from "@mui/icons-material";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { API_BASE_URL } from "../../../config.ts";
-// import {ArrowBack} from "@mui/icons-material";
 
 type ChatStatus = "idle" | "created" | "connecting" | "active" | "ended" | "error";
 
@@ -25,6 +17,8 @@ type StopResponse = { session_id: string; status: "ended" };
 interface VoiceChatProps {
     initialLessonId?: string;
     initialUserId?: number;
+    lessonTitle?: string;
+    onBack?: () => void;
 }
 
 // ключ для восстановления/добивания хвоста
@@ -48,6 +42,8 @@ const postJson = async <T,>(url: string, body: unknown): Promise<T> => {
 export function VoiceChat({
                               initialLessonId = "",
                               initialUserId,
+                              lessonTitle,
+                              onBack,
                           }: VoiceChatProps) {
     const [lessonId, setLessonId] = useState(initialLessonId);
     const [userId, setUserId] = useState(
@@ -55,7 +51,6 @@ export function VoiceChat({
     );
     const [status, setStatus] = useState<ChatStatus>("idle");
     const [sessionId, setSessionId] = useState<string | null>(null);
-    const [callId, setCallId] = useState<string | null>(null);
     const [greeting, setGreeting] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
     const peerRef = useRef<RTCPeerConnection | null>(null);
@@ -102,7 +97,6 @@ export function VoiceChat({
         }
 
         setStatus((prev) => (prev === "idle" ? prev : "ended"));
-        setCallId(null);
         dataChannelRef.current = null;
     }, []);
 
@@ -194,7 +188,6 @@ export function VoiceChat({
                 sdp_offer: offer.sdp ?? "",
             });
 
-            setCallId(offerResponse.call_id);
             await pc.setRemoteDescription({ type: "answer", sdp: offerResponse.sdp_answer });
             setStatus(offerResponse.status);
         },
@@ -321,10 +314,16 @@ export function VoiceChat({
 
     return (
         <Stack spacing={3} sx={{ maxWidth: 800, mx: "auto" }}>
-
-            {/*<Button onClick={onBack} startIcon={<ArrowBack />} color="primary" sx={{ alignSelf: "flex-start" }}>*/}
-            {/*    Назад к темам*/}
-            {/*</Button>*/}
+            {onBack && (
+                <Button
+                    onClick={onBack}
+                    startIcon={<ArrowBack />}
+                    color="primary"
+                    sx={{ alignSelf: "flex-start" }}
+                >
+                    Назад к темам
+                </Button>
+            )}
 
             <Paper
                 sx={{
@@ -335,7 +334,7 @@ export function VoiceChat({
                 }}
             >
                 <Stack spacing={2}>
-                    <Typography variant="h5">Voice Chat (WebRTC)</Typography>
+                    <Typography variant="h5">{lessonTitle || "Тема урока"}</Typography>
                     <Typography variant="body2" color="text.secondary">
                         Запустите голосовой чат.
                     </Typography>
@@ -381,16 +380,6 @@ export function VoiceChat({
                         }}
                     >
                         <Stack spacing={0.5}>
-                            {sessionId && (
-                                <Typography variant="body2" color="text.secondary">
-                                    session_id: <strong>{sessionId}</strong>
-                                </Typography>
-                            )}
-                            {callId && (
-                                <Typography variant="body2" color="text.secondary">
-                                    call_id: <strong>{callId}</strong>
-                                </Typography>
-                            )}
                             {greeting && (
                                 <Typography variant="body2">
                                     <strong>Greeting:</strong> {greeting}

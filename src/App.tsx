@@ -214,10 +214,12 @@ function App() {
             }
 
             return (
-                <Stack spacing={2}>
-                    <Button variant="outlined" onClick={() => setActivePage("interview")}>Назад</Button>
-                    <VoiceChat initialLessonId={selectedLessonId} initialUserId={userProfile.id} />
-                </Stack>
+                <VoiceChat
+                    initialLessonId={selectedLessonId}
+                    initialUserId={userProfile.id}
+                    lessonTitle={lessonState.data?.title}
+                    onBack={() => setActivePage("interview")}
+                />
             );
         }
 
